@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 
@@ -130,7 +131,7 @@ public interface Change<T> {
     }
 
     /**
-     * Object attribute value when it's missing.
+     * Object attribute add when it's missing.
      */
     final class AttrMiss implements Change<JsonObj> {
         /**
@@ -165,6 +166,38 @@ public interface Change<T> {
                         new JsonObj.Attr(this.name, this.value)
                     )
                 );
+            }
+            return new JsonObj(attrs);
+        }
+    }
+
+    /**
+     * Object attribute delete.
+     */
+    final class AttrDel implements Change<JsonObj> {
+        /**
+         * Attribute name.
+         */
+        private final String name;
+
+        /**
+         * Ctor.
+         * @param name Attribute name.
+         */
+        public AttrDel(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public JsonObj apply(final JsonObj input) throws Exception {
+            final Iterable<JsonObj.Attr> attrs;
+            if (input.contains(this.name)) {
+                attrs = new Filtered<>(
+                    attr -> !attr.name().equals(this.name),
+                    input.attributes()
+                );
+            } else {
+                attrs = input.attributes();
             }
             return new JsonObj(attrs);
         }

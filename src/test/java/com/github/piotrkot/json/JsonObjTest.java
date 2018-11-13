@@ -99,4 +99,25 @@ public final class JsonObjTest {
             Matchers.is("{\"s\":\"ss\",\"text\":\"message\"}")
         );
     }
+
+    /**
+     * Should transfer Json object by deleting given attribute.
+     * Deletes "del" attribute.
+     * <pre>{"del":\"priv\","keep":\"pub\"} => {"keep":\"pub\"}</pre>
+     * @throws Exception When fails.
+     */
+    @Test
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    public void shouldDelAttrObj() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonObj(
+                new JsonObj(
+                    new JsonObj.Attr("del", new Vstr("priv")),
+                    new JsonObj.Attr("keep", new Vstr("pub"))
+                ),
+                new Change.AttrDel("del")
+            ).jsonValue().toString(),
+            Matchers.is("{\"keep\":\"pub\"}")
+        );
+    }
 }
