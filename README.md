@@ -145,13 +145,19 @@ To get started, add dependency to your project:
 </dependency>
 ```
 
-You may need to add [JSON-P](https://javaee.github.io/jsonp/) implementation,
-like:
+You may need to add [JSON-P](https://javaee.github.io/jsonp/) dependency:
 ```xml
+<dependency>
+    <groupId>javax.json</groupId>
+    <artifactId>javax.json-api</artifactId>
+    <version>1.1.4</version>
+    <scope>provided</scope>
+</dependency>
 <dependency>
     <groupId>org.glassfish</groupId>
     <artifactId>javax.json</artifactId>
     <version>1.1.4</version>
+    <scope>runtime</scope>
 </dependency>
 ```
 
