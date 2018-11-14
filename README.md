@@ -141,7 +141,17 @@ To get started, add dependency to your project:
 <dependency>
     <groupId>com.github.piotrkot</groupId>
     <artifactId>oojson</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
+</dependency>
+```
+
+You may need to add [JSON-P](https://javaee.github.io/jsonp/) implementation,
+like:
+```xml
+<dependency>
+    <groupId>org.glassfish</groupId>
+    <artifactId>javax.json</artifactId>
+    <version>1.1.4</version>
 </dependency>
 ```
 

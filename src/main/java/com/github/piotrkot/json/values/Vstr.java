@@ -43,7 +43,15 @@ public final class Vstr implements JsonVal<String> {
      * @param val Value for string.
      */
     public Vstr(final String val) {
-        this.val = Json.createValue(val);
+        this(Json.createValue(val));
+    }
+
+    /**
+     * Ctor.
+     * @param val Value for string.
+     */
+    public Vstr(final JsonString val) {
+        this.val = val;
     }
 
     @Override

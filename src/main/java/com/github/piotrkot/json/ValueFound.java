@@ -62,7 +62,7 @@ public final class ValueFound {
                 val = new JsonObj((JsonObject) this.value);
                 break;
             case STRING:
-                val = new Vstr(((JsonString) this.value).getString());
+                val = new Vstr((JsonString) this.value);
                 break;
             case ARRAY:
                 val = new JsonArr((JsonArray) this.value);
