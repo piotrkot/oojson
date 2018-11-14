@@ -23,6 +23,7 @@
  */
 package com.github.piotrkot.json;
 
+import java.io.InputStream;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.Collection;
@@ -77,6 +78,14 @@ public final class JsonObj implements JsonVal {
      */
     public JsonObj(final Reader reader) {
         this(Json.createReader(reader).readObject());
+    }
+
+    /**
+     * Ctor.
+     * @param input Input stream.
+     */
+    public JsonObj(final InputStream input) {
+        this(Json.createReader(input).readObject());
     }
 
     /**

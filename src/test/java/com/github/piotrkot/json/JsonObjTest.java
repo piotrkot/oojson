@@ -26,7 +26,9 @@ package com.github.piotrkot.json;
 import com.github.piotrkot.json.values.Vbool;
 import com.github.piotrkot.json.values.Vnum;
 import com.github.piotrkot.json.values.Vstr;
+import java.io.ByteArrayInputStream;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import javax.json.Json;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -72,6 +74,23 @@ public final class JsonObjTest {
     }
 
     /**
+     * Should create JSON object from input stream.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateObjStream() throws Exception {
+        final String obj =
+            "{\"f\":false,\"y\":\"\",\"z\":[\"Z\"],\"x\":{\"X\":0}}";
+        MatcherAssert.assertThat(
+            new JsonObj(
+                new ByteArrayInputStream(
+                    obj.getBytes(StandardCharsets.UTF_8)
+                )).jsonValue().toString(),
+            Matchers.is(obj)
+        );
+    }
+
+    /**
      * Should create JSON object from string with API.
      * @throws Exception When fails.
      */
@@ -83,6 +102,33 @@ public final class JsonObjTest {
                 new JsonObj.Attr("id", new Vnum(1))
             ).jsonValue().toString(),
             Matchers.is("{\"name\":\"Mark\",\"id\":1}")
+        );
+    }
+
+    /**
+     * Should fetch JSON object attribute.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldGetObjAttr() throws Exception {
+        final String empty = "empty";
+        MatcherAssert.assertThat(
+            new JsonObj(
+                new JsonObj.Attr(empty, new Vstr(""))
+            ).get(empty).value(),
+            Matchers.is("")
+        );
+    }
+
+    /**
+     * Should fetch JSON object default attribute.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldGetObjDefAttr() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonObj().getOrDefault("miss", new Vstr("X")).value(),
+            Matchers.is("X")
         );
     }
 

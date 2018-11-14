@@ -26,7 +26,9 @@ package com.github.piotrkot.json;
 import com.github.piotrkot.json.values.Vbool;
 import com.github.piotrkot.json.values.Vnum;
 import com.github.piotrkot.json.values.Vstr;
+import java.io.ByteArrayInputStream;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import javax.json.Json;
 import javax.json.JsonArray;
 import org.cactoos.iterable.Filtered;
@@ -69,6 +71,22 @@ public final class JsonArrTest {
         final String array = "[false,\"x\",1,[],{}]";
         MatcherAssert.assertThat(
             new JsonArr(new StringReader(array)).jsonValue().toString(),
+            Matchers.is(array)
+        );
+    }
+
+    /**
+     * Should create JSON array from input stream.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateArrStream() throws Exception {
+        final String array = "[false,\"y\",2,[\"Z\"],{\"x\":0}]";
+        MatcherAssert.assertThat(
+            new JsonArr(
+                new ByteArrayInputStream(
+                    array.getBytes(StandardCharsets.UTF_8)
+                )).jsonValue().toString(),
             Matchers.is(array)
         );
     }
