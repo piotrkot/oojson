@@ -47,7 +47,7 @@ public final class VboolTest {
     }
 
     /**
-     * Should create Json object with boolean value.
+     * Should create JSON object with boolean value.
      * @throws Exception When fails.
      */
     @Test
@@ -60,7 +60,7 @@ public final class VboolTest {
     }
 
     /**
-     * Should create Json array with boolean value.
+     * Should create JSON array with boolean value.
      * @throws Exception When fails.
      */
     @Test

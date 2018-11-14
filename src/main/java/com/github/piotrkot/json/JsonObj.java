@@ -37,13 +37,13 @@ import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
 
 /**
- * Json object.
+ * JSON object.
  *
  * @since 1.0
  */
 public final class JsonObj implements JsonVal {
     /**
-     * Attributes of Json object.
+     * Attributes of JSON object.
      */
     private final Map<String, JsonVal> attrs;
 
@@ -65,7 +65,7 @@ public final class JsonObj implements JsonVal {
 
     /**
      * Ctor.
-     * @param base Json object from API.
+     * @param base JSON object from API.
      */
     public JsonObj(final JsonObject base) {
         this(base.entrySet());
@@ -81,7 +81,7 @@ public final class JsonObj implements JsonVal {
 
     /**
      * Ctor.
-     * @param base Json object from API.
+     * @param base JSON object from API.
      * @param attribute Attribute for json object.
      */
     public JsonObj(final JsonObject base, final Attr attribute) {
@@ -90,7 +90,7 @@ public final class JsonObj implements JsonVal {
 
     /**
      * Ctor.
-     * @param base Json object from API.
+     * @param base JSON object from API.
      * @param attributes Attributes for json object.
      */
     public JsonObj(final JsonObject base, final Iterable<Attr> attributes) {
@@ -107,8 +107,8 @@ public final class JsonObj implements JsonVal {
 
     /**
      * Ctor.
-     * @param origin Json object origin.
-     * @param change Change of Json object.
+     * @param origin JSON object origin.
+     * @param change Change of JSON object.
      * @throws Exception When change fails.
      */
     public JsonObj(final JsonObj origin, final Change<JsonObj> change)
@@ -118,8 +118,8 @@ public final class JsonObj implements JsonVal {
 
     /**
      * Ctor.
-     * @param origin Json object origin.
-     * @param changes Changes of Json object attributes.
+     * @param origin JSON object origin.
+     * @param changes Changes of JSON object attributes.
      * @throws Exception When change fails.
      */
     public JsonObj(final JsonObj origin,
@@ -129,8 +129,8 @@ public final class JsonObj implements JsonVal {
 
     /**
      * Ctor.
-     * @param origin Json object origin.
-     * @param changes Changes of Json object attributes.
+     * @param origin JSON object origin.
+     * @param changes Changes of JSON object attributes.
      * @throws Exception When change fails.
      */
     @SafeVarargs
@@ -155,7 +155,7 @@ public final class JsonObj implements JsonVal {
     }
 
     /**
-     * Json object attributes.
+     * JSON object attributes.
      * @return All attributes.
      */
     public Iterable<Attr> attributes() {
@@ -177,7 +177,7 @@ public final class JsonObj implements JsonVal {
     /**
      * Gets attribute value for given name.
      * @param name Attribute name.
-     * @return Json value.
+     * @return JSON value.
      */
     public JsonVal get(final String name) {
         return this.attrs.get(name);
@@ -187,7 +187,7 @@ public final class JsonObj implements JsonVal {
      * Gets attribute value for given name or default.
      * @param name Attribute name.
      * @param def Default value.
-     * @return Json value or default if not found.
+     * @return JSON value or default if not found.
      */
     public JsonVal getOrDefault(final String name, final JsonVal def) {
         return this.attrs.getOrDefault(name, def);
@@ -222,7 +222,7 @@ public final class JsonObj implements JsonVal {
     }
 
     /**
-     * Attribute of Json object.
+     * Attribute of JSON object.
      */
     public static class Attr {
         /**
@@ -264,7 +264,7 @@ public final class JsonObj implements JsonVal {
 
         /**
          * Attribute value.
-         * @return Arbitrary Json value.
+         * @return Arbitrary JSON value.
          */
         public JsonVal value() {
             return this.avalue;

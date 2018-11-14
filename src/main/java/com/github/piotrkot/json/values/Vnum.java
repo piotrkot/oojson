@@ -26,6 +26,7 @@ package com.github.piotrkot.json.values;
 import com.github.piotrkot.json.JsonVal;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import javax.json.Json;
 import javax.json.JsonNumber;
 
 /**
@@ -35,7 +36,7 @@ import javax.json.JsonNumber;
  */
 public final class Vnum implements JsonVal<Number> {
     /**
-     * Json number.
+     * JSON number.
      */
     private final JsonNumber val;
 
@@ -52,7 +53,7 @@ public final class Vnum implements JsonVal<Number> {
      * @param val Value for number.
      */
     public Vnum(final int val) {
-        this(new IntJson(val));
+        this(Json.createValue(val));
     }
 
     /**
@@ -60,7 +61,7 @@ public final class Vnum implements JsonVal<Number> {
      * @param val Value for number.
      */
     public Vnum(final long val) {
-        this(new LongJson(val));
+        this(Json.createValue(val));
     }
 
     /**
@@ -68,7 +69,7 @@ public final class Vnum implements JsonVal<Number> {
      * @param val Value for number.
      */
     public Vnum(final double val) {
-        this(new BigDecimalJson(val));
+        this(Json.createValue(val));
     }
 
     /**
@@ -76,7 +77,7 @@ public final class Vnum implements JsonVal<Number> {
      * @param val Value for number.
      */
     public Vnum(final BigInteger val) {
-        this(new BigDecimalJson(val));
+        this(Json.createValue(val));
     }
 
     /**
@@ -84,7 +85,7 @@ public final class Vnum implements JsonVal<Number> {
      * @param val Value for number.
      */
     public Vnum(final BigDecimal val) {
-        this(new BigDecimalJson(val));
+        this(Json.createValue(val));
     }
 
     @Override
@@ -95,240 +96,5 @@ public final class Vnum implements JsonVal<Number> {
     @Override
     public Number value() {
         return this.val.bigDecimalValue();
-    }
-
-    /**
-     * Json number for API.
-     */
-    private static final class IntJson implements JsonNumber {
-        /**
-         * Number value.
-         */
-        private final int number;
-
-        /**
-         * Ctor.
-         * @param number Number value.
-         */
-        IntJson(final int number) {
-            this.number = number;
-        }
-
-        @Override
-        public ValueType getValueType() {
-            return ValueType.NUMBER;
-        }
-
-        @Override
-        public boolean isIntegral() {
-            return true;
-        }
-
-        @Override
-        public int intValue() {
-            return this.number;
-        }
-
-        @Override
-        public int intValueExact() {
-            return this.number;
-        }
-
-        @Override
-        public long longValue() {
-            return this.number;
-        }
-
-        @Override
-        public long longValueExact() {
-            return this.number;
-        }
-
-        @Override
-        public BigInteger bigIntegerValue() {
-            return new BigDecimal(this.number).toBigInteger();
-        }
-
-        @Override
-        public BigInteger bigIntegerValueExact() {
-            return new BigDecimal(this.number).toBigIntegerExact();
-        }
-
-        @Override
-        public double doubleValue() {
-            return this.number;
-        }
-
-        @Override
-        public BigDecimal bigDecimalValue() {
-            return new BigDecimal(this.number);
-        }
-
-        @Override
-        public String toString() {
-            return String.valueOf(this.number);
-        }
-    }
-
-    /**
-     * Json number for API.
-     */
-    private static final class LongJson implements JsonNumber {
-        /**
-         * Number value.
-         */
-        private final long number;
-
-        /**
-         * Ctor.
-         * @param number Number value.
-         */
-        LongJson(final long number) {
-            this.number = number;
-        }
-
-        @Override
-        public ValueType getValueType() {
-            return ValueType.NUMBER;
-        }
-
-        @Override
-        public boolean isIntegral() {
-            return true;
-        }
-
-        @Override
-        public int intValue() {
-            return (int) this.number;
-        }
-
-        @Override
-        public int intValueExact() {
-            return Math.toIntExact(this.number);
-        }
-
-        @Override
-        public long longValue() {
-            return this.number;
-        }
-
-        @Override
-        public long longValueExact() {
-            return this.number;
-        }
-
-        @Override
-        public BigInteger bigIntegerValue() {
-            return new BigDecimal(this.number).toBigInteger();
-        }
-
-        @Override
-        public BigInteger bigIntegerValueExact() {
-            return new BigDecimal(this.number).toBigIntegerExact();
-        }
-
-        @Override
-        public double doubleValue() {
-            return this.number;
-        }
-
-        @Override
-        public BigDecimal bigDecimalValue() {
-            return new BigDecimal(this.number);
-        }
-
-        @Override
-        public String toString() {
-            return String.valueOf(this.number);
-        }
-    }
-
-    /**
-     * Json number for API.
-     */
-    private static final class BigDecimalJson implements JsonNumber {
-        /**
-         * Number value.
-         */
-        private final BigDecimal number;
-
-        /**
-         * Ctor.
-         * @param number Number value.
-         */
-        BigDecimalJson(final BigDecimal number) {
-            this.number = number;
-        }
-
-        /**
-         * Ctor.
-         * @param number Number value.
-         */
-        BigDecimalJson(final double number) {
-            this(BigDecimal.valueOf(number));
-        }
-
-        /**
-         * Ctor.
-         * @param number Number value.
-         */
-        BigDecimalJson(final BigInteger number) {
-            this(new BigDecimal(number));
-        }
-
-        @Override
-        public ValueType getValueType() {
-            return ValueType.NUMBER;
-        }
-
-        @Override
-        public boolean isIntegral() {
-            return this.number.scale() == 0;
-        }
-
-        @Override
-        public int intValue() {
-            return this.number.intValue();
-        }
-
-        @Override
-        public int intValueExact() {
-            return this.number.intValueExact();
-        }
-
-        @Override
-        public long longValue() {
-            return this.number.longValue();
-        }
-
-        @Override
-        public long longValueExact() {
-            return this.number.longValueExact();
-        }
-
-        @Override
-        public BigInteger bigIntegerValue() {
-            return this.number.toBigInteger();
-        }
-
-        @Override
-        public BigInteger bigIntegerValueExact() {
-            return this.number.toBigIntegerExact();
-        }
-
-        @Override
-        public double doubleValue() {
-            return this.number.doubleValue();
-        }
-
-        @Override
-        public BigDecimal bigDecimalValue() {
-            return this.number;
-        }
-
-        @Override
-        public String toString() {
-            return this.number.toString();
-        }
     }
 }

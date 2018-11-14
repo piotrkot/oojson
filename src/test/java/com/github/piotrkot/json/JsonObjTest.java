@@ -26,19 +26,21 @@ package com.github.piotrkot.json;
 import com.github.piotrkot.json.values.Vbool;
 import com.github.piotrkot.json.values.Vnum;
 import com.github.piotrkot.json.values.Vstr;
+import java.io.StringReader;
+import javax.json.Json;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test for Json object.
+ * Test for JSON object.
  *
  * @since 1.0
  * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
 public final class JsonObjTest {
     /**
-     * Should create Json object.
+     * Should create JSON object.
      * @throws Exception When fails.
      */
     @Test
@@ -56,7 +58,36 @@ public final class JsonObjTest {
     }
 
     /**
-     * Should transfer Json object.
+     * Should create JSON object from string.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateObjString() throws Exception {
+        final String obj =
+            "{\"b\":false,\"s\":\"a\",\"n\":0,\"a\":[],\"o\":{}}";
+        MatcherAssert.assertThat(
+            new JsonObj(new StringReader(obj)).jsonValue().toString(),
+            Matchers.is(obj)
+        );
+    }
+
+    /**
+     * Should create JSON object from string with API.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateObjStringApi() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonObj(
+                Json.createObjectBuilder().add("name", "Mark").build(),
+                new JsonObj.Attr("id", new Vnum(1))
+            ).jsonValue().toString(),
+            Matchers.is("{\"name\":\"Mark\",\"id\":1}")
+        );
+    }
+
+    /**
+     * Should transfer JSON object.
      * Suffix "str" attribute with 'Z', and multiply "num" attribute by 2.
      * <pre>{"str":"A","num":1} => {"str":"AZ","num":2}</pre>
      * @throws Exception When fails.
@@ -82,7 +113,7 @@ public final class JsonObjTest {
     }
 
     /**
-     * Should transfer Json object by filling missing entries.
+     * Should transfer JSON object by filling missing entries.
      * Fills "text" attribute with 'message' when missing.
      * <pre>{"s":\"ss\"} => {"s":\"ss\","text":"text"}</pre>
      * @throws Exception When fails.
@@ -94,14 +125,15 @@ public final class JsonObjTest {
                 new JsonObj(
                     new JsonObj.Attr("s", new Vstr("ss"))
                 ),
-                new Change.AttrMiss("text", new Vstr("message"))
+                new Change.AttrMiss("text", new Vstr("message")),
+                new Change.AttrDel("none")
             ).jsonValue().toString(),
             Matchers.is("{\"s\":\"ss\",\"text\":\"message\"}")
         );
     }
 
     /**
-     * Should transfer Json object by deleting given attribute.
+     * Should transfer JSON object by deleting given attribute.
      * Deletes "del" attribute.
      * <pre>{"del":\"priv\","keep":\"pub\"} => {"keep":\"pub\"}</pre>
      * @throws Exception When fails.
@@ -115,7 +147,8 @@ public final class JsonObjTest {
                     new JsonObj.Attr("del", new Vstr("priv")),
                     new JsonObj.Attr("keep", new Vstr("pub"))
                 ),
-                new Change.AttrDel("del")
+                new Change.AttrDel("del"),
+                new Change.AttrMiss("keep", new Vstr("xxx"))
             ).jsonValue().toString(),
             Matchers.is("{\"keep\":\"pub\"}")
         );

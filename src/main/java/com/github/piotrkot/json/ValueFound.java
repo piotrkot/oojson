@@ -33,27 +33,27 @@ import javax.json.JsonString;
 import javax.json.JsonValue;
 
 /**
- * Json Value found.
+ * JSON Value found.
  *
  * @since 1.0
  */
 public final class ValueFound {
     /**
-     * Json value from API.
+     * JSON value from API.
      */
     private final JsonValue value;
 
     /**
      * Ctor.
-     * @param value Json value from API.
+     * @param value JSON value from API.
      */
     public ValueFound(final JsonValue value) {
         this.value = value;
     }
 
     /**
-     * Value found from API Json value.
-     * @return Json value.
+     * Value found from API JSON value.
+     * @return JSON value.
      */
     public JsonVal asValue() {
         final JsonVal val;

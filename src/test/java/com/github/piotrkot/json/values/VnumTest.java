@@ -51,7 +51,7 @@ public final class VnumTest {
     }
 
     /**
-     * Should create Json object with number value.
+     * Should create JSON object with number value.
      * @throws Exception When fails.
      */
     @Test
@@ -65,7 +65,7 @@ public final class VnumTest {
     }
 
     /**
-     * Should create Json array with number value.
+     * Should create JSON array with number value.
      * @throws Exception When fails.
      */
     @Test

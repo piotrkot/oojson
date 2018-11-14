@@ -35,19 +35,19 @@ import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
 
 /**
- * Json array.
+ * JSON array.
  *
  * @since 1.0
  */
 public final class JsonArr implements JsonVal {
     /**
-     * Elements of Json array.
+     * Elements of JSON array.
      */
     private final Iterable<JsonVal> elems;
 
     /**
      * Ctor.
-     * @param base Json array from API.
+     * @param base JSON array from API.
      */
     public JsonArr(final JsonArray base) {
         this(base.iterator());
@@ -63,7 +63,7 @@ public final class JsonArr implements JsonVal {
 
     /**
      * Ctor.
-     * @param base Json array from API.
+     * @param base JSON array from API.
      * @param elem Element of json array.
      */
     public JsonArr(final JsonArray base, final JsonVal elem) {
@@ -72,7 +72,7 @@ public final class JsonArr implements JsonVal {
 
     /**
      * Ctor.
-     * @param base Json array from API.
+     * @param base JSON array from API.
      * @param elems Elements of json array.
      */
     public JsonArr(final JsonArray base, final Iterable<JsonVal> elems) {
@@ -117,7 +117,7 @@ public final class JsonArr implements JsonVal {
     }
 
     /**
-     * Json array elements.
+     * JSON array elements.
      * @return All elements.
      */
     public Iterable<JsonVal> elements() {

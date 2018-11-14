@@ -26,6 +26,9 @@ package com.github.piotrkot.json;
 import com.github.piotrkot.json.values.Vbool;
 import com.github.piotrkot.json.values.Vnum;
 import com.github.piotrkot.json.values.Vstr;
+import java.io.StringReader;
+import javax.json.Json;
+import javax.json.JsonArray;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.Mapped;
 import org.hamcrest.MatcherAssert;
@@ -33,13 +36,14 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test for Json array.
+ * Test for JSON array.
  *
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
 public final class JsonArrTest {
     /**
-     * Should create Json array.
+     * Should create JSON array.
      * @throws Exception When fails.
      */
     @Test
@@ -57,7 +61,45 @@ public final class JsonArrTest {
     }
 
     /**
-     * Should transfer Json array.
+     * Should create JSON array from string.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateArrString() throws Exception {
+        final String array = "[false,\"x\",1,[],{}]";
+        MatcherAssert.assertThat(
+            new JsonArr(new StringReader(array)).jsonValue().toString(),
+            Matchers.is(array)
+        );
+    }
+
+    /**
+     * Should create JSON array from JSON API.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateArrApiCopy() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonArr(JsonArray.EMPTY_JSON_ARRAY).jsonValue().toString(),
+            Matchers.is("[]")
+        );
+    }
+
+    /**
+     * Should create JSON array from JSON API.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateArrCopy() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonArr(Json.createArrayBuilder().add(0).build(), new Vnum(1))
+                .jsonValue().toString(),
+            Matchers.is("[0,1]")
+        );
+    }
+
+    /**
+     * Should transfer JSON array.
      * All boolean positive values transfer to strings.
      * <pre>[true,false] => ["true"]</pre>
      * @throws Exception When fails.

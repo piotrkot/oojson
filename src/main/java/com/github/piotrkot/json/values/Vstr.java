@@ -24,6 +24,7 @@
 package com.github.piotrkot.json.values;
 
 import com.github.piotrkot.json.JsonVal;
+import javax.json.Json;
 import javax.json.JsonString;
 
 /**
@@ -33,7 +34,7 @@ import javax.json.JsonString;
  */
 public final class Vstr implements JsonVal<String> {
     /**
-     * Json string.
+     * JSON string.
      */
     private final JsonString val;
 
@@ -42,7 +43,7 @@ public final class Vstr implements JsonVal<String> {
      * @param val Value for string.
      */
     public Vstr(final String val) {
-        this.val = new StringJson(val);
+        this.val = Json.createValue(val);
     }
 
     @Override
@@ -53,38 +54,5 @@ public final class Vstr implements JsonVal<String> {
     @Override
     public String value() {
         return this.val.getString();
-    }
-
-    /**
-     * Json string for API.
-     */
-    private static final class StringJson implements JsonString {
-        /**
-         * String value.
-         */
-        private final String string;
-
-        /**
-         * Ctor.
-         * @param string String value.
-         */
-        StringJson(final String string) {
-            this.string = string;
-        }
-
-        @Override
-        public ValueType getValueType() {
-            return ValueType.STRING;
-        }
-
-        @Override
-        public String getString() {
-            return this.string;
-        }
-
-        @Override
-        public CharSequence getChars() {
-            return this.string;
-        }
     }
 }

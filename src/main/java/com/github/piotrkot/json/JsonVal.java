@@ -26,15 +26,15 @@ package com.github.piotrkot.json;
 import javax.json.JsonValue;
 
 /**
- * Json Value.
+ * JSON Value.
  *
  * @param <T> Value type.
  * @since 1.0
  */
 public interface JsonVal<T> {
     /**
-     * Value for Json API.
-     * @return Json value from API.
+     * Value for JSON API.
+     * @return JSON value from API.
      */
     JsonValue jsonValue();
 

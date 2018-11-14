@@ -39,7 +39,7 @@ import org.junit.Test;
  */
 public final class ValueFoundTest {
     /**
-     * Should find Json array.
+     * Should find JSON array.
      * @throws Exception When fails.
      */
     @Test
@@ -51,7 +51,7 @@ public final class ValueFoundTest {
     }
 
     /**
-     * Should find Json object.
+     * Should find JSON object.
      * @throws Exception When fails.
      */
     @Test
@@ -63,7 +63,7 @@ public final class ValueFoundTest {
     }
 
     /**
-     * Should find Json string.
+     * Should find JSON string.
      * @throws Exception When fails.
      */
     @Test
@@ -75,7 +75,7 @@ public final class ValueFoundTest {
     }
 
     /**
-     * Should find Json number.
+     * Should find JSON number.
      * @throws Exception When fails.
      */
     @Test
@@ -87,7 +87,7 @@ public final class ValueFoundTest {
     }
 
     /**
-     * Should find Json boolean.
+     * Should find JSON boolean.
      * @throws Exception When fails.
      */
     @Test
@@ -103,7 +103,7 @@ public final class ValueFoundTest {
     }
 
     /**
-     * Should not find Json null. It's not supported on purpose.
+     * Should not find JSON null. It's not supported on purpose.
      * @throws Exception When fails.
      */
     @Test(expected = UnsupportedOperationException.class)

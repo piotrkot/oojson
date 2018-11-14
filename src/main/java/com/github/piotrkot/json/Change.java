@@ -32,7 +32,7 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 
 /**
- * Json change.
+ * JSON change.
  *
  * @param <T> Type of object being changed.
  * @since 1.0
@@ -83,14 +83,14 @@ public interface Change<T> {
         private final Pattern patt;
 
         /**
-         * Change of Json value for attribute.
+         * Change of JSON value for attribute.
          */
         private final Change<JsonVal> change;
 
         /**
          * Ctor.
          * @param patt Pattern for attribute name.
-         * @param change Change of Json value for attribute.
+         * @param change Change of JSON value for attribute.
          */
         public Attr(final Pattern patt, final Change<JsonVal> change) {
             this.patt = patt;
@@ -100,7 +100,7 @@ public interface Change<T> {
         /**
          * Ctor.
          * @param patt Pattern for attribute name.
-         * @param change Change of Json value for attribute.
+         * @param change Change of JSON value for attribute.
          */
         public Attr(final String patt, final Change<JsonVal> change) {
             this(
@@ -140,14 +140,14 @@ public interface Change<T> {
         private final String name;
 
         /**
-         * New Json value for attribute.
+         * New JSON value for attribute.
          */
         private final JsonVal value;
 
         /**
          * Ctor.
          * @param name Attribute name.
-         * @param value New Json value for attribute.
+         * @param value New JSON value for attribute.
          */
         public AttrMiss(final String name, final JsonVal value) {
             this.name = name;

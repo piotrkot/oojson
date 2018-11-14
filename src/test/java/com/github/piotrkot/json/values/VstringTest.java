@@ -48,7 +48,7 @@ public final class VstringTest {
     }
 
     /**
-     * Should create Json object with string value.
+     * Should create JSON object with string value.
      * @throws Exception When fails.
      */
     @Test
@@ -61,7 +61,7 @@ public final class VstringTest {
     }
 
     /**
-     * Should create Json array with string value.
+     * Should create JSON array with string value.
      * @throws Exception When fails.
      */
     @Test
