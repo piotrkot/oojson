@@ -86,7 +86,8 @@ public final class JsonArrTest {
             new JsonArr(
                 new ByteArrayInputStream(
                     array.getBytes(StandardCharsets.UTF_8)
-                )).jsonValue().toString(),
+                )
+            ).jsonValue().toString(),
             Matchers.is(array)
         );
     }
@@ -114,6 +115,15 @@ public final class JsonArrTest {
                 .jsonValue().toString(),
             Matchers.is("[0,1]")
         );
+    }
+
+    /**
+     * Should not return value of array.
+     * @throws Exception When fails.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void shouldNotReturnValue() throws Exception {
+        new JsonArr().value();
     }
 
     /**

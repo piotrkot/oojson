@@ -85,7 +85,8 @@ public final class JsonObjTest {
             new JsonObj(
                 new ByteArrayInputStream(
                     obj.getBytes(StandardCharsets.UTF_8)
-                )).jsonValue().toString(),
+                )
+            ).jsonValue().toString(),
             Matchers.is(obj)
         );
     }
@@ -103,6 +104,15 @@ public final class JsonObjTest {
             ).jsonValue().toString(),
             Matchers.is("{\"name\":\"Mark\",\"id\":1}")
         );
+    }
+
+    /**
+     * Should not return value of object.
+     * @throws Exception When fails.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void shouldNotReturnValue() throws Exception {
+        new JsonObj().value();
     }
 
     /**

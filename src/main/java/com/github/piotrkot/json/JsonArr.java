@@ -26,7 +26,7 @@ package com.github.piotrkot.json;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.Collection;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -51,7 +51,7 @@ public final class JsonArr implements JsonVal {
      * @param base JSON array from API.
      */
     public JsonArr(final JsonArray base) {
-        this(base.iterator());
+        this(base.getValuesAs(JsonValue.class));
     }
 
     /**
@@ -116,11 +116,11 @@ public final class JsonArr implements JsonVal {
      * Ctor.
      * @param elems Array elements.
      */
-    private JsonArr(final Iterator<JsonValue> elems) {
+    private JsonArr(final Collection<JsonValue> elems) {
         this(
             new Mapped<>(
                 value -> new ValueFound(value).asValue(),
-                new IterableOf<>(elems)
+                elems
             )
         );
     }

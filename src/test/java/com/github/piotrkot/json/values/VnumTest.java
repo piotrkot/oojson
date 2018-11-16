@@ -25,6 +25,8 @@ package com.github.piotrkot.json.values;
 
 import com.github.piotrkot.json.JsonArr;
 import com.github.piotrkot.json.JsonObj;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -36,17 +38,51 @@ import org.junit.Test;
  */
 public final class VnumTest {
     /**
-     * Should create numerical value.
+     * Should create int value.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateNumValue() throws Exception {
+    public void shouldCreateIntValue() throws Exception {
         MatcherAssert.assertThat(
             new Vnum(1).value().intValue(), Matchers.is(1)
         );
-        // @checkstyle MagicNumber (2 lines)
+    }
+
+    /**
+     * Should create double value.
+     * @throws Exception When fails.
+     * @checkstyle MagicNumber (5 lines)
+     */
+    @Test
+    public void shouldCreateDoubleValue() throws Exception {
         MatcherAssert.assertThat(
             new Vnum(0.124d).value().doubleValue(), Matchers.is(0.124)
+        );
+    }
+
+    /**
+     * Should create big int value.
+     * @throws Exception When fails.
+     * @checkstyle MagicNumber (6 lines)
+     */
+    @Test
+    public void shouldCreateBigIntValue() throws Exception {
+        MatcherAssert.assertThat(
+            new Vnum(new BigInteger("12")).value().intValue(),
+            Matchers.is(12)
+        );
+    }
+
+    /**
+     * Should create big decimal value.
+     * @throws Exception When fails.
+     * @checkstyle MagicNumber (6 lines)
+     */
+    @Test
+    public void shouldCreateBigDecValue() throws Exception {
+        MatcherAssert.assertThat(
+            new Vnum(new BigDecimal("1.2")).value().doubleValue(),
+            Matchers.is(1.2)
         );
     }
 
