@@ -89,7 +89,7 @@ public final class JsonArr implements JsonVal {
             new Joined<>(
                 new Mapped<>(
                     value -> new ValueFound(value).asValue(),
-                    new IterableOf<>(base.iterator())
+                    base.getValuesAs(JsonValue.class)
                 ),
                 elems
             )

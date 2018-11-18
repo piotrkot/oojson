@@ -30,6 +30,7 @@ import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import javax.json.Json;
+import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -203,8 +204,10 @@ public final class JsonObjTest {
                     new JsonObj.Attr("del", new Vstr("priv")),
                     new JsonObj.Attr("keep", new Vstr("pub"))
                 ),
-                new Change.AttrDel("del"),
-                new Change.AttrMiss("keep", new Vstr("xxx"))
+                new IterableOf<>(
+                    new Change.AttrDel("del"),
+                    new Change.AttrMiss("keep", new Vstr("xxx"))
+                )
             ).jsonValue().toString(),
             Matchers.is("{\"keep\":\"pub\"}")
         );

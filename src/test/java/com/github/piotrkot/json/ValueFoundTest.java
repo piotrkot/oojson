@@ -87,15 +87,23 @@ public final class ValueFoundTest {
     }
 
     /**
-     * Should find JSON boolean.
+     * Should find JSON false boolean.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindBool() throws Exception {
+    public void shouldFindBoolF() throws Exception {
         MatcherAssert.assertThat(
             new ValueFound(JsonValue.FALSE).asValue(),
             Matchers.instanceOf(Vbool.class)
         );
+    }
+
+    /**
+     * Should find JSON true boolean.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldFindBoolT() throws Exception {
         MatcherAssert.assertThat(
             new ValueFound(JsonValue.TRUE).asValue(),
             Matchers.instanceOf(Vbool.class)
