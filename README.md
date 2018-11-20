@@ -132,8 +132,7 @@ new JsonObj(
 
 The result is object `{"keep":"public","more":"info"}`.
 
-Library supports full [JSON specification](https://json.org/) with one exception -
-value `"null"` is not accepted.
+Library supports [JSON specification](https://json.org/).
   
 
 To get started, add dependency to your project:
@@ -141,7 +140,7 @@ To get started, add dependency to your project:
 <dependency>
     <groupId>com.github.piotrkot</groupId>
     <artifactId>oojson</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
 </dependency>
 ```
 

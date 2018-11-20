@@ -24,6 +24,7 @@
 package com.github.piotrkot.json;
 
 import com.github.piotrkot.json.values.Vbool;
+import com.github.piotrkot.json.values.Vnull;
 import com.github.piotrkot.json.values.Vnum;
 import com.github.piotrkot.json.values.Vstr;
 import javax.json.Json;
@@ -111,11 +112,14 @@ public final class ValueFoundTest {
     }
 
     /**
-     * Should not find JSON null. It's not supported on purpose.
+     * Should find JSON null.
      * @throws Exception When fails.
      */
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void shouldNotFindNull() throws Exception {
-        new ValueFound(JsonValue.NULL).asValue();
+        MatcherAssert.assertThat(
+            new ValueFound(JsonValue.NULL).asValue(),
+            Matchers.instanceOf(Vnull.class)
+        );
     }
 }

@@ -24,6 +24,7 @@
 package com.github.piotrkot.json;
 
 import com.github.piotrkot.json.values.Vbool;
+import com.github.piotrkot.json.values.Vnull;
 import com.github.piotrkot.json.values.Vnum;
 import com.github.piotrkot.json.values.Vstr;
 import javax.json.JsonArray;
@@ -75,6 +76,9 @@ public final class ValueFound {
                 break;
             case TRUE:
                 val = new Vbool(true);
+                break;
+            case NULL:
+                val = new Vnull();
                 break;
             default:
                 throw new UnsupportedOperationException(
