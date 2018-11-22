@@ -187,9 +187,15 @@ public final class JsonObj implements JsonVal {
      * Gets attribute value for given name.
      * @param name Attribute name.
      * @return JSON value.
+     * @throws JsonException When parameter is not found.
      */
-    public JsonVal get(final String name) {
-        return this.attrs.get(name);
+    public JsonVal get(final String name) throws JsonException {
+        if (this.attrs.containsKey(name)) {
+            return this.attrs.get(name);
+        }
+        throw new JsonException(
+            String.format("attribute name \"%s\" not found", name)
+        );
     }
 
     /**
@@ -198,7 +204,7 @@ public final class JsonObj implements JsonVal {
      * @param def Default value.
      * @return JSON value or default if not found.
      */
-    public JsonVal getOrDefault(final String name, final JsonVal def) {
+    public JsonVal get(final String name, final JsonVal def) {
         return this.attrs.getOrDefault(name, def);
     }
 
