@@ -31,6 +31,7 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonValue;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
@@ -116,7 +117,7 @@ public final class JsonArr implements JsonVal {
      * Ctor.
      * @param elems Array elements.
      */
-    private JsonArr(final Collection<JsonValue> elems) {
+    public JsonArr(final Collection<JsonValue> elems) {
         this(
             new Mapped<>(
                 value -> new ValueFound(value).asValue(),
@@ -129,8 +130,8 @@ public final class JsonArr implements JsonVal {
      * JSON array elements.
      * @return All elements.
      */
-    public Iterable<JsonVal> elements() {
-        return this.elems;
+    public Collection<JsonVal> elements() {
+        return new CollectionOf<>(this.elems);
     }
 
     @Override
