@@ -42,6 +42,7 @@ import org.cactoos.map.MapOf;
  * JSON object.
  *
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
 public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
     /**
