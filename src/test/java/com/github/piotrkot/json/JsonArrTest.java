@@ -29,6 +29,7 @@ import com.github.piotrkot.json.values.Vstr;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import javax.json.Json;
 import javax.json.JsonArray;
 import org.cactoos.iterable.Filtered;
@@ -118,12 +119,15 @@ public final class JsonArrTest {
     }
 
     /**
-     * Should not return value of array.
+     * Should return value of array.
      * @throws Exception When fails.
      */
-    @Test(expected = UnsupportedOperationException.class)
-    public void shouldNotReturnValue() throws Exception {
-        new JsonArr().value();
+    @Test
+    public void shouldReturnValue() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonArr().value(),
+            Matchers.instanceOf(Collection.class)
+        );
     }
 
     /**
@@ -145,7 +149,7 @@ public final class JsonArrTest {
                             new JsonArr(
                                 new Vbool(false),
                                 new Vbool(true)
-                            ).elements()
+                            )
                         )
                     )
                 )

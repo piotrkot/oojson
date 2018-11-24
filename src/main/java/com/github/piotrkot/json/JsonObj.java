@@ -36,13 +36,14 @@ import javax.json.JsonValue;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.map.MapOf;
 
 /**
  * JSON object.
  *
  * @since 1.0
  */
-public final class JsonObj implements JsonVal {
+public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
     /**
      * Attributes of JSON object.
      */
@@ -218,8 +219,8 @@ public final class JsonObj implements JsonVal {
     }
 
     @Override
-    public Object value() {
-        throw new UnsupportedOperationException("value");
+    public Map<String, JsonVal> value() {
+        return new MapOf<>(this.attrs);
     }
 
     /**

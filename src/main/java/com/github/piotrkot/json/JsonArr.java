@@ -31,6 +31,7 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonValue;
+import org.cactoos.collection.CollectionEnvelope;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
@@ -41,12 +42,8 @@ import org.cactoos.iterable.Mapped;
  *
  * @since 1.0
  */
-public final class JsonArr implements JsonVal {
-    /**
-     * Elements of JSON array.
-     */
-    private final Iterable<JsonVal> elems;
-
+public final class JsonArr extends CollectionEnvelope<JsonVal> implements
+    JsonVal<Collection<JsonVal>> {
     /**
      * Ctor.
      * @param base JSON array from API.
@@ -101,14 +98,6 @@ public final class JsonArr implements JsonVal {
      * Ctor.
      * @param elems Array elements.
      */
-    public JsonArr(final Iterable<JsonVal> elems) {
-        this.elems = elems;
-    }
-
-    /**
-     * Ctor.
-     * @param elems Array elements.
-     */
     public JsonArr(final JsonVal... elems) {
         this(Arrays.asList(elems));
     }
@@ -127,24 +116,24 @@ public final class JsonArr implements JsonVal {
     }
 
     /**
-     * JSON array elements.
-     * @return All elements.
+     * Ctor.
+     * @param elems Array elements.
      */
-    public Collection<JsonVal> elements() {
-        return new CollectionOf<>(this.elems);
+    public JsonArr(final Iterable<JsonVal> elems) {
+        super(() -> new CollectionOf<>(elems));
     }
 
     @Override
     public JsonArray jsonValue() {
         JsonArrayBuilder builder = Json.createArrayBuilder();
-        for (final JsonVal elem : this.elems) {
+        for (final JsonVal elem : this) {
             builder = builder.add(elem.jsonValue());
         }
         return builder.build();
     }
 
     @Override
-    public Object value() {
-        throw new UnsupportedOperationException("value");
+    public Collection<JsonVal> value() {
+        return this;
     }
 }
