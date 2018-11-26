@@ -29,6 +29,8 @@ import com.github.piotrkot.json.values.Vstr;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.Map;
 import javax.json.Json;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -115,12 +117,15 @@ public final class JsonObjTest {
     }
 
     /**
-     * Should not return value of object.
+     * Should return value of object.
      * @throws Exception When fails.
      */
-    @Test(expected = UnsupportedOperationException.class)
-    public void shouldNotReturnValue() throws Exception {
-        new JsonObj().value();
+    @Test
+    public void shouldReturnValue() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonObj().value(),
+            Matchers.instanceOf(Map.class)
+        );
     }
 
     /**
@@ -157,14 +162,26 @@ public final class JsonObjTest {
     }
 
     /**
-     * Should fetch JSON object default attribute.
+     * Should fetch JSON simple object default attribute.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldGetObjDefAttr() throws Exception {
+    public void shouldGetSimpleObjDefAttr() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj().get("miss", new Vstr("X")).value(),
             Matchers.is("X")
+        );
+    }
+
+    /**
+     * Should fetch JSON complex object default attribute.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldGetComplexObjDefAttr() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonObj().get("other", new JsonArr()).value(),
+            Matchers.instanceOf(Collection.class)
         );
     }
 }
