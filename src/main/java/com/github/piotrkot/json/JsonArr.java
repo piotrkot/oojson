@@ -71,7 +71,7 @@ public final class JsonArr extends CollectionEnvelope<JsonVal> implements
     /**
      * Ctor.
      * @param base JSON array from API.
-     * @param elem Element of json array.
+     * @param elem Element of JSON array.
      */
     public JsonArr(final JsonArray base, final JsonVal elem) {
         this(base, new IterableOf<>(elem));
@@ -80,7 +80,7 @@ public final class JsonArr extends CollectionEnvelope<JsonVal> implements
     /**
      * Ctor.
      * @param base JSON array from API.
-     * @param elems Elements of json array.
+     * @param elems Elements of JSON array.
      */
     public JsonArr(final JsonArray base, final Iterable<JsonVal> elems) {
         this(
