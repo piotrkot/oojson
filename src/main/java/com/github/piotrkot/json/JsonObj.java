@@ -93,16 +93,16 @@ public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
     /**
      * Ctor.
      * @param base JSON object from API.
-     * @param attribute Attribute for json object.
+     * @param attributes Attributes for JSON object.
      */
-    public JsonObj(final JsonObject base, final Attr attribute) {
-        this(base, new IterableOf<>(attribute));
+    public JsonObj(final JsonObject base, final Attr... attributes) {
+        this(base, new IterableOf<>(attributes));
     }
 
     /**
      * Ctor.
      * @param base JSON object from API.
-     * @param attributes Attributes for json object.
+     * @param attributes Attributes for JSON object.
      */
     public JsonObj(final JsonObject base, final Iterable<Attr> attributes) {
         this(

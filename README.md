@@ -125,7 +125,9 @@ new FitChain<>(
 The result is object `{"moreInfo":true}`.
 
 Library supports [JSON specification](https://json.org/).
-  
+
+Please, note the library is still in early development and it's API can
+frequently change.
 
 To get started, add dependency to your project:
 ```xml
