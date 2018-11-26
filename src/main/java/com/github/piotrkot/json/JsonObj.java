@@ -118,42 +118,6 @@ public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
 
     /**
      * Ctor.
-     * @param origin JSON object origin.
-     * @param change Change of JSON object.
-     * @throws Exception When change fails.
-     */
-    public JsonObj(final JsonObj origin, final Change<JsonObj> change)
-        throws Exception {
-        this(change.apply(origin).attributes());
-    }
-
-    /**
-     * Ctor.
-     * @param origin JSON object origin.
-     * @param changes Changes of JSON object attributes.
-     * @throws Exception When change fails.
-     */
-    public JsonObj(final JsonObj origin,
-        final Iterable<Change<JsonObj>> changes) throws Exception {
-        this(origin, new Change.Chain(changes));
-    }
-
-    /**
-     * Ctor.
-     * @param origin JSON object origin.
-     * @param changes Changes of JSON object attributes.
-     * @throws Exception When change fails.
-     */
-    @SafeVarargs
-    public JsonObj(final JsonObj origin, final Change<JsonObj>... changes)
-        throws Exception {
-        this(
-            origin, new Change.Chain(new IterableOf<>(changes))
-        );
-    }
-
-    /**
-     * Ctor.
      * @param attributes Object attributes.
      */
     private JsonObj(final Collection<Map.Entry<String, JsonValue>> attributes) {

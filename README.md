@@ -91,46 +91,38 @@ new JsonArr(
 
 The result is array `["20 points"]`.
 
-## Transforming JSON objects
+## Making JSON objects fit
 
-In the example, value of `str` attribute is appended with `"Z"` and
-value of `num` attribute is multiplied by 2.
+In the example, value of `num` attribute is multiplied by 2.
 
 ```java
 JsonObj object = new JsonObj(
     new JsonObj.Attr("str", new Vstr("A")),
     new JsonObj.Attr("num", new Vnum(1))
 );
-new JsonObj(
-    object,
-    new Change.Attr(
-        "str", str -> new Vstr(((String) str.value()).concat("Z"))
-    ),
-    new Change.Attr(
-        "num",
-        num -> new Vnum(((Number) num.value()).intValue() * 2)
-    )
-).jsonValue().toString();
+new FitValUpd(
+    "num",
+    new Vnum(((Number) object.get("num").value()).intValue() * 2)
+).make(object).jsonValue().toString();
 ```
 
-The result is object `{"str":"AZ","num":2}`.
+The result is object `{"str":"A","num":2}`.
 
-In the example, attributes with name `delete` are removed and attribute
-`more` with value `"info"` is added if not already present.
+In the example, attribute with name `delete` is removed and attribute
+with name `info` is replaced with attribute `"moreInfo"` and value `true`.
 
 ```java
 JsonObj object = new JsonObj(
     new JsonObj.Attr("delete", new Vstr("private")),
-    new JsonObj.Attr("keep", new Vstr("public"))
+    new JsonObj.Attr("info", new Vstr("public info"))
 );
-new JsonObj(
-    object,
-    new Change.AttrDel("delete"),
-    new Change.AttrMiss("more", new Vstr("info"))
-).jsonValue().toString(),
+new FitChain<>(
+    new FitAttrDel("delete"),
+    new FitAttrRepl("info", new JsonObj.Attr("moreInfo", new Vbool(true)))
+).make(object).jsonValue().toString();
 ```
 
-The result is object `{"keep":"public","more":"info"}`.
+The result is object `{"moreInfo":true}`.
 
 Library supports [JSON specification](https://json.org/).
   
