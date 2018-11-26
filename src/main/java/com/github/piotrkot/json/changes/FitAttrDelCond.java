@@ -59,7 +59,7 @@ public final class FitAttrDelCond implements Fit<JsonObj> {
     @Override
     public JsonObj make(final JsonObj input) throws Exception {
         final JsonObj result;
-        if (this.cond.test(input.get(this.name))) {
+        if (input.contains(this.name) && this.cond.test(input.get(this.name))) {
             result = new JsonObj(
                 new Filtered<>(
                     attr -> !attr.name().equals(this.name),

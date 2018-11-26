@@ -46,7 +46,23 @@ public final class FitAttrDelCondTest {
             new JsonObj.Attr("val", new Vstr("foo"))
         );
         MatcherAssert.assertThat(
-            new FitAttrDelCond("val", attr -> attr.value().equals("bar"))
+            new FitAttrDelCond("val", val -> val.value().equals("bar"))
+                .make(obj).jsonValue().toString(),
+            Matchers.is("{\"val\":\"foo\"}")
+        );
+    }
+
+    /**
+     * Should not delete attribute when no such attribute.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldNotDeleteMiss() throws Exception {
+        final JsonObj obj = new JsonObj(
+            new JsonObj.Attr("val", new Vstr("foo"))
+        );
+        MatcherAssert.assertThat(
+            new FitAttrDelCond("test", val -> val.value().equals("bar"))
                 .make(obj).jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
         );
@@ -63,7 +79,7 @@ public final class FitAttrDelCondTest {
         );
         MatcherAssert.assertThat(
             new FitAttrDelCond(
-                "type", attr -> ((String) attr.value()).startsWith("ba")
+                "type", val -> ((String) val.value()).startsWith("ba")
             ).make(obj).jsonValue().toString(),
             Matchers.is("{}")
         );
