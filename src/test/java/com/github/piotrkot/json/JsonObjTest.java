@@ -29,11 +29,14 @@ import com.github.piotrkot.json.values.Vstr;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.Map;
 import javax.json.Json;
-import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Test for JSON object.
@@ -42,6 +45,12 @@ import org.junit.Test;
  * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
 public final class JsonObjTest {
+    /**
+     * Expected exception.
+     */
+    @Rule
+    public final ExpectedException exp = ExpectedException.none();
+
     /**
      * Should create JSON object.
      * @throws Exception When fails.
@@ -108,12 +117,15 @@ public final class JsonObjTest {
     }
 
     /**
-     * Should not return value of object.
+     * Should return value of object.
      * @throws Exception When fails.
      */
-    @Test(expected = UnsupportedOperationException.class)
-    public void shouldNotReturnValue() throws Exception {
-        new JsonObj().value();
+    @Test
+    public void shouldReturnValue() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonObj().value(),
+            Matchers.instanceOf(Map.class)
+        );
     }
 
     /**
@@ -132,84 +144,44 @@ public final class JsonObjTest {
     }
 
     /**
-     * Should fetch JSON object default attribute.
+     * Should not fetch JSON object attribute.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldGetObjDefAttr() throws Exception {
+    public void shouldNotGetObjAttr() throws Exception {
+        this.exp.expect(
+            Matchers.allOf(
+                Matchers.isA(JsonException.class),
+                Matchers.hasProperty(
+                    "message",
+                    Matchers.is("attribute name \"missing\" not found")
+                )
+            )
+        );
+        new JsonObj().get("missing");
+    }
+
+    /**
+     * Should fetch JSON simple object default attribute.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldGetSimpleObjDefAttr() throws Exception {
         MatcherAssert.assertThat(
-            new JsonObj().getOrDefault("miss", new Vstr("X")).value(),
+            new JsonObj().get("miss", new Vstr("X")).value(),
             Matchers.is("X")
         );
     }
 
     /**
-     * Should transfer JSON object.
-     * Suffix "str" attribute with 'Z', and multiply "num" attribute by 2.
-     * <pre>{"str":"A","num":1} => {"str":"AZ","num":2}</pre>
+     * Should fetch JSON complex object default attribute.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldTransferObj() throws Exception {
+    public void shouldGetComplexObjDefAttr() throws Exception {
         MatcherAssert.assertThat(
-            new JsonObj(
-                new JsonObj(
-                    new JsonObj.Attr("str", new Vstr("A")),
-                    new JsonObj.Attr("num", new Vnum(1))
-                ),
-                new Change.Attr(
-                    "st.", str -> new Vstr(((String) str.value()).concat("Z"))
-                ),
-                new Change.Attr(
-                    ".*um",
-                    num -> new Vnum(((Number) num.value()).intValue() * 2)
-                )
-            ).jsonValue().toString(),
-            Matchers.is("{\"str\":\"AZ\",\"num\":2}")
-        );
-    }
-
-    /**
-     * Should transfer JSON object by filling missing entries.
-     * Fills "text" attribute with 'message' when missing.
-     * <pre>{"s":\"ss\"} => {"s":\"ss\","text":"text"}</pre>
-     * @throws Exception When fails.
-     */
-    @Test
-    public void shouldFillMissingObj() throws Exception {
-        MatcherAssert.assertThat(
-            new JsonObj(
-                new JsonObj(
-                    new JsonObj.Attr("s", new Vstr("ss"))
-                ),
-                new Change.AttrMiss("text", new Vstr("message")),
-                new Change.AttrDel("none")
-            ).jsonValue().toString(),
-            Matchers.is("{\"s\":\"ss\",\"text\":\"message\"}")
-        );
-    }
-
-    /**
-     * Should transfer JSON object by deleting given attribute.
-     * Deletes "del" attribute.
-     * <pre>{"del":\"priv\","keep":\"pub\"} => {"keep":\"pub\"}</pre>
-     * @throws Exception When fails.
-     */
-    @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    public void shouldDelAttrObj() throws Exception {
-        MatcherAssert.assertThat(
-            new JsonObj(
-                new JsonObj(
-                    new JsonObj.Attr("del", new Vstr("priv")),
-                    new JsonObj.Attr("keep", new Vstr("pub"))
-                ),
-                new IterableOf<>(
-                    new Change.AttrDel("del"),
-                    new Change.AttrMiss("keep", new Vstr("xxx"))
-                )
-            ).jsonValue().toString(),
-            Matchers.is("{\"keep\":\"pub\"}")
+            new JsonObj().get("other", new JsonArr()).value(),
+            Matchers.instanceOf(Collection.class)
         );
     }
 }

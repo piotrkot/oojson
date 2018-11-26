@@ -36,13 +36,15 @@ import javax.json.JsonValue;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.map.MapOf;
 
 /**
  * JSON object.
  *
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
-public final class JsonObj implements JsonVal {
+public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
     /**
      * Attributes of JSON object.
      */
@@ -91,16 +93,16 @@ public final class JsonObj implements JsonVal {
     /**
      * Ctor.
      * @param base JSON object from API.
-     * @param attribute Attribute for json object.
+     * @param attributes Attributes for JSON object.
      */
-    public JsonObj(final JsonObject base, final Attr attribute) {
-        this(base, new IterableOf<>(attribute));
+    public JsonObj(final JsonObject base, final Attr... attributes) {
+        this(base, new IterableOf<>(attributes));
     }
 
     /**
      * Ctor.
      * @param base JSON object from API.
-     * @param attributes Attributes for json object.
+     * @param attributes Attributes for JSON object.
      */
     public JsonObj(final JsonObject base, final Iterable<Attr> attributes) {
         this(
@@ -111,42 +113,6 @@ public final class JsonObj implements JsonVal {
                 ),
                 attributes
             )
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param origin JSON object origin.
-     * @param change Change of JSON object.
-     * @throws Exception When change fails.
-     */
-    public JsonObj(final JsonObj origin, final Change<JsonObj> change)
-        throws Exception {
-        this(change.apply(origin).attributes());
-    }
-
-    /**
-     * Ctor.
-     * @param origin JSON object origin.
-     * @param changes Changes of JSON object attributes.
-     * @throws Exception When change fails.
-     */
-    public JsonObj(final JsonObj origin,
-        final Iterable<Change<JsonObj>> changes) throws Exception {
-        this(origin, new Change.Chain(changes));
-    }
-
-    /**
-     * Ctor.
-     * @param origin JSON object origin.
-     * @param changes Changes of JSON object attributes.
-     * @throws Exception When change fails.
-     */
-    @SafeVarargs
-    public JsonObj(final JsonObj origin, final Change<JsonObj>... changes)
-        throws Exception {
-        this(
-            origin, new Change.Chain(new IterableOf<>(changes))
         );
     }
 
@@ -187,9 +153,15 @@ public final class JsonObj implements JsonVal {
      * Gets attribute value for given name.
      * @param name Attribute name.
      * @return JSON value.
+     * @throws JsonException When parameter is not found.
      */
-    public JsonVal get(final String name) {
-        return this.attrs.get(name);
+    public JsonVal get(final String name) throws JsonException {
+        if (this.attrs.containsKey(name)) {
+            return this.attrs.get(name);
+        }
+        throw new JsonException(
+            String.format("attribute name \"%s\" not found", name)
+        );
     }
 
     /**
@@ -198,7 +170,7 @@ public final class JsonObj implements JsonVal {
      * @param def Default value.
      * @return JSON value or default if not found.
      */
-    public JsonVal getOrDefault(final String name, final JsonVal def) {
+    public JsonVal get(final String name, final JsonVal def) {
         return this.attrs.getOrDefault(name, def);
     }
 
@@ -212,8 +184,8 @@ public final class JsonObj implements JsonVal {
     }
 
     @Override
-    public Object value() {
-        throw new UnsupportedOperationException("value");
+    public Map<String, JsonVal> value() {
+        return new MapOf<>(this.attrs);
     }
 
     /**
