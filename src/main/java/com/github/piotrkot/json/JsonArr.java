@@ -106,7 +106,7 @@ public final class JsonArr extends CollectionEnvelope<JsonVal> implements
      * Ctor.
      * @param elems Array elements.
      */
-    public JsonArr(final Collection<JsonValue> elems) {
+    public JsonArr(final Collection<? extends JsonValue> elems) {
         this(
             new Mapped<>(
                 value -> new ValueFound(value).asValue(),
