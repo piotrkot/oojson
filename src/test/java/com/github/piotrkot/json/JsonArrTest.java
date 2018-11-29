@@ -32,8 +32,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonValue;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -102,6 +104,24 @@ public final class JsonArrTest {
         MatcherAssert.assertThat(
             new JsonArr(JsonArray.EMPTY_JSON_ARRAY).jsonValue().toString(),
             Matchers.is("[]")
+        );
+    }
+
+    /**
+     * Should create JSON array from list of JSON API values.
+     */
+    @Test
+    public void shouldCreateArrApiList() {
+        MatcherAssert.assertThat(
+            new JsonArr(
+                new ListOf<>(
+                    // @checkstyle MagicNumberCheck (1 line)
+                    Json.createValue(5.5),
+                    Json.createValue("42"),
+                    JsonValue.TRUE
+                )
+            ).jsonValue().toString(),
+            Matchers.is("[5.5,\"42\",true]")
         );
     }
 
