@@ -23,6 +23,7 @@
  */
 package com.github.piotrkot.json.changes;
 
+import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.IterableOf;
@@ -39,7 +40,7 @@ public final class FitAttrRepl extends FitCond<JsonObj> {
      * @param name Attribute with given name to be replaced.
      * @param attr New attribute.
      */
-    public FitAttrRepl(final String name, final JsonObj.Attr attr) {
+    public FitAttrRepl(final String name, final Attr attr) {
         super(
             json -> json.contains(name),
             json -> new JsonObj(

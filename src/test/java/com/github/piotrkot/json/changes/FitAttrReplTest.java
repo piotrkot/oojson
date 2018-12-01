@@ -23,10 +23,8 @@
  */
 package com.github.piotrkot.json.changes;
 
+import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
-import com.github.piotrkot.json.values.Vbool;
-import com.github.piotrkot.json.values.Vnum;
-import com.github.piotrkot.json.values.Vstr;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -45,10 +43,10 @@ public final class FitAttrReplTest {
     @Test
     public void shouldNotReplace() throws Exception {
         final JsonObj obj = new JsonObj(
-            new JsonObj.Attr("val", new Vstr("foo"))
+            new Attr.Str("val", "foo")
         );
         MatcherAssert.assertThat(
-            new FitAttrRepl("bar", new JsonObj.Attr("la", new Vnum(0)))
+            new FitAttrRepl("bar", new Attr.Num("la", 0))
                 .make(obj).jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
         );
@@ -61,11 +59,11 @@ public final class FitAttrReplTest {
     @Test
     public void shouldReplaceAttribute() throws Exception {
         final JsonObj obj = new JsonObj(
-            new JsonObj.Attr("type", new Vstr("bar")),
-            new JsonObj.Attr("aa", new Vbool(true))
+            new Attr.Str("type", "bar"),
+            new Attr.Bool("aa", true)
         );
         MatcherAssert.assertThat(
-            new FitAttrRepl("type", new JsonObj.Attr("val", new Vnum(0)))
+            new FitAttrRepl("type", new Attr.Num("val", 0))
                 .make(obj).jsonValue().toString(),
             Matchers.is("{\"aa\":true,\"val\":0}")
         );

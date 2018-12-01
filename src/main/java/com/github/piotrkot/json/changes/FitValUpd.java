@@ -23,6 +23,7 @@
  */
 package com.github.piotrkot.json.changes;
 
+import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
 import com.github.piotrkot.json.JsonVal;
 import org.cactoos.iterable.Filtered;
@@ -49,7 +50,7 @@ public final class FitValUpd extends FitCond<JsonObj> {
                         attr -> !attr.name().equals(name),
                         json.attributes()
                     ),
-                    new IterableOf<>(new JsonObj.Attr(name, val))
+                    new IterableOf<>(new Attr.JsonV(name, val))
                 )
             )
         );

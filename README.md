@@ -42,11 +42,11 @@ From object attributes
 
 ```java
 new JsonObj(
-    new JsonObj.Attr("bool", new Vbool(true)),
-    new JsonObj.Attr("str", new Vstr("a")),
-    new JsonObj.Attr("num", new Vnum(0)),
-    new JsonObj.Attr("arr", new JsonArr()),
-    new JsonObj.Attr("obj", new JsonObj())
+    new Attr.Bool("bool", true),
+    new Attr.Str("str", "a"),
+    new Attr.Num("num", 0),
+    new Attr.Arr("arr", new JsonArr()),
+    new Attr.Obj("obj", new JsonObj())
 );
 ```
 
@@ -65,7 +65,7 @@ or by combining JSON-P object with object attributes
 ```java
 new JsonObj(
     Json.createObjectBuilder().add("name", "John").build(),
-    new JsonObj.Attr("age", new Vnum(30))
+    new Attr.Num("age", 30)
 );
 ```
 
@@ -97,8 +97,8 @@ In the example, value of `num` attribute is multiplied by 2.
 
 ```java
 JsonObj object = new JsonObj(
-    new JsonObj.Attr("str", new Vstr("A")),
-    new JsonObj.Attr("num", new Vnum(1))
+    new Attr.Str("str", "A"),
+    new Attr.Num("num", 1)
 );
 new FitValUpd(
     "num",
@@ -113,12 +113,12 @@ with name `info` is replaced with attribute `"moreInfo"` and value `true`.
 
 ```java
 JsonObj object = new JsonObj(
-    new JsonObj.Attr("delete", new Vstr("private")),
-    new JsonObj.Attr("info", new Vstr("public info"))
+    new Attr.Str("delete", "private"),
+    new Attr.Str("info", "public info")
 );
 new FitChain<>(
     new FitAttrDel("delete"),
-    new FitAttrRepl("info", new JsonObj.Attr("moreInfo", new Vbool(true)))
+    new FitAttrRepl("info", new Attr.Bool("moreInfo", true))
 ).make(object).jsonValue().toString();
 ```
 
@@ -134,7 +134,7 @@ To get started, add dependency to your project:
 <dependency>
     <groupId>com.github.piotrkot</groupId>
     <artifactId>oojson</artifactId>
-    <version>1.4.1</version>
+    <version>1.5.0</version>
 </dependency>
 ```
 

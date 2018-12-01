@@ -23,6 +23,7 @@
  */
 package com.github.piotrkot.json.values;
 
+import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonArr;
 import com.github.piotrkot.json.JsonObj;
 import org.hamcrest.MatcherAssert;
@@ -53,7 +54,7 @@ public final class VnullTest {
     @Test
     public void shouldCreateObjNull() throws Exception {
         MatcherAssert.assertThat(
-            new JsonObj(new JsonObj.Attr("test", new Vnull()))
+            new JsonObj(new Attr.Null("test"))
                 .jsonValue().toString(),
             Matchers.is("{\"test\":null}")
         );

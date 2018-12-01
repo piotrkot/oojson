@@ -23,9 +23,10 @@
  */
 package com.github.piotrkot.json.changes;
 
+import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
-import com.github.piotrkot.json.values.Vnum;
-import com.github.piotrkot.json.values.Vstr;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -44,10 +45,10 @@ public final class FitAttrAddTest {
     @Test
     public void shouldNotAdd() throws Exception {
         final JsonObj obj = new JsonObj(
-            new JsonObj.Attr("val", new Vstr("foo"))
+            new Attr.Str("val", "foo")
         );
         MatcherAssert.assertThat(
-            new FitAttrAdd(new JsonObj.Attr("val", new Vnum(0))).make(obj)
+            new FitAttrAdd(new Attr.Num("val", BigInteger.ONE)).make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
         );
@@ -60,10 +61,10 @@ public final class FitAttrAddTest {
     @Test
     public void shouldAddAttribute() throws Exception {
         final JsonObj obj = new JsonObj(
-            new JsonObj.Attr("type", new Vstr("bar"))
+            new Attr.Str("type", "bar")
         );
         MatcherAssert.assertThat(
-            new FitAttrAdd(new JsonObj.Attr("val", new Vnum(0))).make(obj)
+            new FitAttrAdd(new Attr.Num("val", BigDecimal.ZERO)).make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"type\":\"bar\",\"val\":0}")
         );

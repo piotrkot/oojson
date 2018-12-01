@@ -108,7 +108,7 @@ public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
         this(
             new Joined<>(
                 new Mapped<>(
-                    entry -> new Attr(entry.getKey(), entry.getValue()),
+                    entry -> new Attr.Json(entry.getKey(), entry.getValue()),
                     base.entrySet()
                 ),
                 attributes
@@ -123,7 +123,7 @@ public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
     private JsonObj(final Collection<Map.Entry<String, JsonValue>> attributes) {
         this(
             new Mapped<>(
-                entry -> new Attr(entry.getKey(), entry.getValue()),
+                entry -> new Attr.Json(entry.getKey(), entry.getValue()),
                 attributes
             )
         );
@@ -135,7 +135,7 @@ public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
      */
     public Iterable<Attr> attributes() {
         return new Mapped<>(
-            entry -> new Attr(entry.getKey(), entry.getValue()),
+            entry -> new Attr.JsonV(entry.getKey(), entry.getValue()),
             this.attrs.entrySet()
         );
     }
@@ -197,58 +197,8 @@ public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
     private static Map<String, JsonVal> asMap(final Iterable<Attr> attrs) {
         final Map<String, JsonVal> map = new LinkedHashMap<>();
         for (final Attr attr : attrs) {
-            map.put(attr.aname, attr.avalue);
+            map.put(attr.name(), attr.value());
         }
         return map;
-    }
-
-    /**
-     * Attribute of JSON object.
-     */
-    public static class Attr {
-        /**
-         * Attribute name.
-         */
-        private final String aname;
-
-        /**
-         * Attribute value.
-         */
-        private final JsonVal avalue;
-
-        /**
-         * Ctor.
-         * @param name Attribute name.
-         * @param value Attribute value.
-         */
-        public Attr(final String name, final JsonVal value) {
-            this.aname = name;
-            this.avalue = value;
-        }
-
-        /**
-         * Ctor.
-         * @param name Attribute name.
-         * @param value Attribute value.
-         */
-        private Attr(final String name, final JsonValue value) {
-            this(name, new ValueFound(value).asValue());
-        }
-
-        /**
-         * Attribute name.
-         * @return String name.
-         */
-        public String name() {
-            return this.aname;
-        }
-
-        /**
-         * Attribute value.
-         * @return Arbitrary JSON value.
-         */
-        public JsonVal value() {
-            return this.avalue;
-        }
     }
 }

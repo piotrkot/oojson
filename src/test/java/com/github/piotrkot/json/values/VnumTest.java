@@ -23,6 +23,7 @@
  */
 package com.github.piotrkot.json.values;
 
+import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonArr;
 import com.github.piotrkot.json.JsonObj;
 import java.math.BigDecimal;
@@ -94,7 +95,7 @@ public final class VnumTest {
     public void shouldCreateObjNum() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj(
-                new JsonObj.Attr("min", new Vnum(Integer.MIN_VALUE))
+                new Attr.Num("min", Integer.MIN_VALUE)
             ).jsonValue().toString(),
             Matchers.is("{\"min\":-2147483648}")
         );

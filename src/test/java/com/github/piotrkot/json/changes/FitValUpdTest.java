@@ -23,6 +23,7 @@
  */
 package com.github.piotrkot.json.changes;
 
+import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
 import com.github.piotrkot.json.values.Vnum;
 import com.github.piotrkot.json.values.Vstr;
@@ -44,7 +45,7 @@ public final class FitValUpdTest {
     @Test
     public void shouldNotUpdateValue() throws Exception {
         final JsonObj obj = new JsonObj(
-            new JsonObj.Attr("val", new Vstr("foo"))
+            new Attr.Str("val", "foo")
         );
         MatcherAssert.assertThat(
             new FitValUpd("test", new Vstr("hello")).make(obj)
@@ -60,7 +61,7 @@ public final class FitValUpdTest {
     @Test
     public void shouldUpdateValue() throws Exception {
         final JsonObj obj = new JsonObj(
-            new JsonObj.Attr("type", new Vstr("bar"))
+            new Attr.Str("type", "bar")
         );
         MatcherAssert.assertThat(
             new FitValUpd("type", new Vstr("zoo")).make(obj)
@@ -76,7 +77,7 @@ public final class FitValUpdTest {
     @Test
     public void shouldUpdateValueDyn() throws Exception {
         final JsonObj obj = new JsonObj(
-            new JsonObj.Attr("num", new Vnum(1))
+            new Attr.Num("num", 1)
         );
         MatcherAssert.assertThat(
             new FitValUpd(

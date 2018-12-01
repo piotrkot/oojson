@@ -23,6 +23,7 @@
  */
 package com.github.piotrkot.json.values;
 
+import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonArr;
 import com.github.piotrkot.json.JsonObj;
 import org.hamcrest.MatcherAssert;
@@ -54,7 +55,7 @@ public final class VstringTest {
     @Test
     public void shouldCreateObjStr() throws Exception {
         MatcherAssert.assertThat(
-            new JsonObj(new JsonObj.Attr("test", new Vstr("")))
+            new JsonObj(new Attr.Str("test", ""))
                 .jsonValue().toString(),
             Matchers.is("{\"test\":\"\"}")
         );

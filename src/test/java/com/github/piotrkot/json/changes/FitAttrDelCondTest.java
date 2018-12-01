@@ -23,8 +23,8 @@
  */
 package com.github.piotrkot.json.changes;
 
+import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
-import com.github.piotrkot.json.values.Vstr;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public final class FitAttrDelCondTest {
     @Test
     public void shouldNotDelete() throws Exception {
         final JsonObj obj = new JsonObj(
-            new JsonObj.Attr("val", new Vstr("foo"))
+            new Attr.Str("val", "foo")
         );
         MatcherAssert.assertThat(
             new FitAttrDelCond("val", val -> val.value().equals("bar"))
@@ -59,7 +59,7 @@ public final class FitAttrDelCondTest {
     @Test
     public void shouldNotDeleteMiss() throws Exception {
         final JsonObj obj = new JsonObj(
-            new JsonObj.Attr("val", new Vstr("foo"))
+            new Attr.Str("val", "foo")
         );
         MatcherAssert.assertThat(
             new FitAttrDelCond("test", val -> val.value().equals("bar"))
@@ -75,7 +75,7 @@ public final class FitAttrDelCondTest {
     @Test
     public void shouldDeleteAttribute() throws Exception {
         final JsonObj obj = new JsonObj(
-            new JsonObj.Attr("type", new Vstr("bar"))
+            new Attr.Str("type", "bar")
         );
         MatcherAssert.assertThat(
             new FitAttrDelCond(

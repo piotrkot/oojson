@@ -23,8 +23,6 @@
  */
 package com.github.piotrkot.json;
 
-import com.github.piotrkot.json.values.Vbool;
-import com.github.piotrkot.json.values.Vnum;
 import com.github.piotrkot.json.values.Vstr;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
@@ -54,18 +52,19 @@ public final class JsonObjTest {
     /**
      * Should create JSON object.
      * @throws Exception When fails.
+     * @checkstyle MagicNumber (10 lines)
      */
     @Test
     public void shouldCreateObj() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj(
-                new JsonObj.Attr("b", new Vbool(true)),
-                new JsonObj.Attr("s", new Vstr("a")),
-                new JsonObj.Attr("n", new Vnum(0)),
-                new JsonObj.Attr("a", new JsonArr()),
-                new JsonObj.Attr("o", new JsonObj())
+                new Attr.Bool("b", true),
+                new Attr.Str("s", "a"),
+                new Attr.Num("n", 0.5),
+                new Attr.Arr("a", new JsonArr()),
+                new Attr.Obj("o", new JsonObj())
             ).jsonValue().toString(),
-            Matchers.is("{\"b\":true,\"s\":\"a\",\"n\":0,\"a\":[],\"o\":{}}")
+            Matchers.is("{\"b\":true,\"s\":\"a\",\"n\":0.5,\"a\":[],\"o\":{}}")
         );
     }
 
@@ -110,7 +109,7 @@ public final class JsonObjTest {
         MatcherAssert.assertThat(
             new JsonObj(
                 Json.createObjectBuilder().add("name", "Mark").build(),
-                new JsonObj.Attr("id", new Vnum(1))
+                new Attr.Num("id", 1)
             ).jsonValue().toString(),
             Matchers.is("{\"name\":\"Mark\",\"id\":1}")
         );
@@ -137,7 +136,7 @@ public final class JsonObjTest {
         final String empty = "empty";
         MatcherAssert.assertThat(
             new JsonObj(
-                new JsonObj.Attr(empty, new Vstr(""))
+                new Attr.Str(empty, "")
             ).get(empty).value(),
             Matchers.is("")
         );

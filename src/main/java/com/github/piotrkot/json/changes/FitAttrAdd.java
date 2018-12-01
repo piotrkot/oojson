@@ -23,6 +23,7 @@
  */
 package com.github.piotrkot.json.changes;
 
+import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Joined;
@@ -37,7 +38,7 @@ public final class FitAttrAdd extends FitCond<JsonObj> {
      * Ctor.
      * @param attr Attribute to add.
      */
-    public FitAttrAdd(final JsonObj.Attr attr) {
+    public FitAttrAdd(final Attr attr) {
         super(
             json -> !json.contains(attr.name()),
             json -> new JsonObj(
