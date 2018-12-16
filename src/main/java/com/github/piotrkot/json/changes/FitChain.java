@@ -42,6 +42,7 @@ public final class FitChain<T> implements Fit<T> {
      * Ctor.
      * @param fits Fits collection.
      */
+    @SafeVarargs
     public FitChain(final Fit<T>... fits) {
         this(Arrays.asList(fits));
     }

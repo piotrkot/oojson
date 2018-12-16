@@ -23,7 +23,6 @@
  */
 package com.github.piotrkot.json.changes;
 
-import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
 import org.cactoos.iterable.Filtered;
 
@@ -40,7 +39,7 @@ public final class FitAttrDel extends FitUncond<JsonObj> {
     public FitAttrDel(final String name) {
         super(
             json -> new JsonObj(
-                new Filtered<Attr>(
+                new Filtered<>(
                     attr -> !attr.name().equals(name),
                     json.attributes()
                 )

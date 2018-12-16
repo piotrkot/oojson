@@ -23,7 +23,6 @@
  */
 package com.github.piotrkot.json;
 
-import com.github.piotrkot.json.values.Vstr;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
@@ -58,11 +57,11 @@ public final class JsonObjTest {
     public void shouldCreateObj() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj(
-                new Attr.Bool("b", true),
-                new Attr.Str("s", "a"),
-                new Attr.Num("n", 0.5),
-                new Attr.Arr("a", new JsonArr()),
-                new Attr.Obj("o", new JsonObj())
+                new Attr<>("b", true),
+                new Attr<>("s", "a"),
+                new Attr<>("n", 0.5),
+                new Attr<>("a", new JsonArr<>()),
+                new Attr<>("o", new JsonObj())
             ).jsonValue().toString(),
             Matchers.is("{\"b\":true,\"s\":\"a\",\"n\":0.5,\"a\":[],\"o\":{}}")
         );
@@ -109,7 +108,7 @@ public final class JsonObjTest {
         MatcherAssert.assertThat(
             new JsonObj(
                 Json.createObjectBuilder().add("name", "Mark").build(),
-                new Attr.Num("id", 1)
+                new Attr<>("id", 1)
             ).jsonValue().toString(),
             Matchers.is("{\"name\":\"Mark\",\"id\":1}")
         );
@@ -136,8 +135,8 @@ public final class JsonObjTest {
         final String empty = "empty";
         MatcherAssert.assertThat(
             new JsonObj(
-                new Attr.Str(empty, "")
-            ).get(empty).value(),
+                new Attr<>(empty, "")
+            ).<String>get(empty),
             Matchers.is("")
         );
     }
@@ -153,7 +152,7 @@ public final class JsonObjTest {
                 Matchers.isA(JsonException.class),
                 Matchers.hasProperty(
                     "message",
-                    Matchers.is("attribute name \"missing\" not found")
+                    Matchers.is("Attribute name \"missing\" not found")
                 )
             )
         );
@@ -167,8 +166,20 @@ public final class JsonObjTest {
     @Test
     public void shouldGetSimpleObjDefAttr() throws Exception {
         MatcherAssert.assertThat(
-            new JsonObj().get("miss", new Vstr("X")).value(),
+            new JsonObj().get("miss", "X"),
             Matchers.is("X")
+        );
+    }
+
+    /**
+     * Should fetch JSON simple object not default attribute.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldGetSimpleObjNotDefAttr() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonObj(new Attr<>("M", "Y")).get("M", "X"),
+            Matchers.is("Y")
         );
     }
 
@@ -179,7 +190,7 @@ public final class JsonObjTest {
     @Test
     public void shouldGetComplexObjDefAttr() throws Exception {
         MatcherAssert.assertThat(
-            new JsonObj().get("other", new JsonArr()).value(),
+            new JsonObj().get("other", new JsonArr<>()).value(),
             Matchers.instanceOf(Collection.class)
         );
     }

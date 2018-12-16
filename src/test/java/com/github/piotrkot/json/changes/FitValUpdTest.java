@@ -25,8 +25,6 @@ package com.github.piotrkot.json.changes;
 
 import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
-import com.github.piotrkot.json.values.Vnum;
-import com.github.piotrkot.json.values.Vstr;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -45,10 +43,10 @@ public final class FitValUpdTest {
     @Test
     public void shouldNotUpdateValue() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("val", "foo")
+            new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
-            new FitValUpd("test", new Vstr("hello")).make(obj)
+            new FitValUpd("test", "hello").make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
         );
@@ -61,10 +59,10 @@ public final class FitValUpdTest {
     @Test
     public void shouldUpdateValue() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("type", "bar")
+            new Attr<>("type", "bar")
         );
         MatcherAssert.assertThat(
-            new FitValUpd("type", new Vstr("zoo")).make(obj)
+            new FitValUpd("type", "zoo").make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"type\":\"zoo\"}")
         );
@@ -77,12 +75,12 @@ public final class FitValUpdTest {
     @Test
     public void shouldUpdateValueDyn() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Num("num", 1)
+            new Attr<>("num", 1)
         );
         MatcherAssert.assertThat(
             new FitValUpd(
                 "num",
-                new Vnum(((Number) obj.get("num").value()).intValue() * 2)
+                (obj.<Integer>get("num")) * 2
             ).make(obj).jsonValue().toString(),
             Matchers.is("{\"num\":2}")
         );

@@ -23,11 +23,9 @@
  */
 package com.github.piotrkot.json;
 
-import com.github.piotrkot.json.values.Vbool;
-import com.github.piotrkot.json.values.Vnum;
-import com.github.piotrkot.json.values.Vstr;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import javax.json.Json;
@@ -46,6 +44,7 @@ import org.junit.Test;
  * @since 1.0
  * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class JsonArrTest {
     /**
      * Should create JSON array.
@@ -54,14 +53,57 @@ public final class JsonArrTest {
     @Test
     public void shouldCreateArr() throws Exception {
         MatcherAssert.assertThat(
-            new JsonArr(
-                new Vbool(true),
-                new Vstr("a"),
-                new Vnum(1),
-                new JsonArr(),
+            new JsonArr<>(
+                true,
+                "a",
+                1,
+                new JsonArr<>(),
                 new JsonObj()
             ).jsonValue().toString(),
             Matchers.is("[true,\"a\",1,[],{}]")
+        );
+    }
+
+    /**
+     * Should create safe JSON boolean array.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateBoolArr() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonArr<>(
+                true, false, true
+            ).jsonValue().toString(),
+            Matchers.is("[true,false,true]")
+        );
+    }
+
+    /**
+     * Should create JSON string array.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateStrArr() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonArr<>(
+                "a", "ba", "acd"
+            ).jsonValue().toString(),
+            Matchers.is("[\"a\",\"ba\",\"acd\"]")
+        );
+    }
+
+    /**
+     * Should create JSON number array.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateNumArr() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonArr<>(
+                // @checkstyle MagicNumberCheck (1 line)
+                1, 1.4, -1.3, 3L, BigDecimal.TEN
+            ).jsonValue().toString(),
+            Matchers.is("[1,1.4,-1.3,3,10]")
         );
     }
 
@@ -126,26 +168,13 @@ public final class JsonArrTest {
     }
 
     /**
-     * Should create JSON array from JSON API.
-     * @throws Exception When fails.
-     */
-    @Test
-    public void shouldCreateArrCopy() throws Exception {
-        MatcherAssert.assertThat(
-            new JsonArr(Json.createArrayBuilder().add(0).build(), new Vnum(1))
-                .jsonValue().toString(),
-            Matchers.is("[0,1]")
-        );
-    }
-
-    /**
      * Should return value of array.
      * @throws Exception When fails.
      */
     @Test
     public void shouldReturnValue() throws Exception {
         MatcherAssert.assertThat(
-            new JsonArr().value(),
+            new JsonArr<>().value(),
             Matchers.instanceOf(Collection.class)
         );
     }
@@ -159,17 +188,13 @@ public final class JsonArrTest {
     @Test
     public void shouldTransferArr() throws Exception {
         MatcherAssert.assertThat(
-            new JsonArr(
+            new JsonArr<>(
                 new Mapped<>(
-                    elem -> new Vstr(Boolean.toString(elem)),
+                    elem -> Boolean.toString(elem),
                     new Filtered<>(
                         elem -> elem,
-                        new Mapped<>(
-                            elem -> (Boolean) elem.value(),
-                            new JsonArr(
-                                new Vbool(false),
-                                new Vbool(true)
-                            )
+                        new JsonArr<>(
+                            false, true
                         )
                     )
                 )

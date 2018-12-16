@@ -25,7 +25,6 @@ package com.github.piotrkot.json.changes;
 
 import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
-import com.github.piotrkot.json.values.Vstr;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -44,12 +43,12 @@ public final class FitChainTest {
     @Test
     public void shouldMakeChain() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("val", "foo")
+            new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
             new FitChain<>(
-                new FitAttrAdd(new Attr.Num("test", 1L)),
-                new FitValUpd("val", new Vstr("bar"))
+                new FitAttrAdd(new Attr<>("test", 1L)),
+                new FitValUpd("val", "bar")
             ).make(obj).jsonValue().toString(),
             Matchers.is("{\"test\":1,\"val\":\"bar\"}")
         );

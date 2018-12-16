@@ -25,16 +25,15 @@ package com.github.piotrkot.json.changes;
 
 import com.github.piotrkot.json.Fit;
 import com.github.piotrkot.json.JsonObj;
-import com.github.piotrkot.json.JsonVal;
 import java.util.function.Predicate;
 import org.cactoos.iterable.Filtered;
 
 /**
  * Make it fit by deleting attribute under given condition.
- *
+ * @param <T> Type of attribute.
  * @since 1.0
  */
-public final class FitAttrDelCond implements Fit<JsonObj> {
+public final class FitAttrDelCond<T> implements Fit<JsonObj> {
     /**
      * Attribute's name to delete.
      */
@@ -43,7 +42,7 @@ public final class FitAttrDelCond implements Fit<JsonObj> {
     /**
      * Condition that value of the to be deleted attribute must satisfy.
      */
-    private final Predicate<JsonVal> cond;
+    private final Predicate<T> cond;
 
     /**
      * Ctor.
@@ -51,7 +50,7 @@ public final class FitAttrDelCond implements Fit<JsonObj> {
      * @param cond Condition that value of the to be deleted attribute
      *  must satisfy.
      */
-    public FitAttrDelCond(final String name, final Predicate<JsonVal> cond) {
+    public FitAttrDelCond(final String name, final Predicate<T> cond) {
         this.name = name;
         this.cond = cond;
     }
@@ -59,7 +58,8 @@ public final class FitAttrDelCond implements Fit<JsonObj> {
     @Override
     public JsonObj make(final JsonObj input) throws Exception {
         final JsonObj result;
-        if (input.contains(this.name) && this.cond.test(input.get(this.name))) {
+        if (input.contains(this.name)
+            && this.cond.test(input.<T>get(this.name))) {
             result = new JsonObj(
                 new Filtered<>(
                     attr -> !attr.name().equals(this.name),
