@@ -43,10 +43,10 @@ public final class FitAttrReplTest {
     @Test
     public void shouldNotReplace() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("val", "foo")
+            new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
-            new FitAttrRepl("bar", new Attr.Num("la", 0))
+            new FitAttrRepl("bar", new Attr<>("la", 0))
                 .make(obj).jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
         );
@@ -59,11 +59,11 @@ public final class FitAttrReplTest {
     @Test
     public void shouldReplaceAttribute() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("type", "bar"),
-            new Attr.Bool("aa", true)
+            new Attr<>("type", "bar"),
+            new Attr<>("aa", true)
         );
         MatcherAssert.assertThat(
-            new FitAttrRepl("type", new Attr.Num("val", 0))
+            new FitAttrRepl("type", new Attr<>("val", 0))
                 .make(obj).jsonValue().toString(),
             Matchers.is("{\"aa\":true,\"val\":0}")
         );

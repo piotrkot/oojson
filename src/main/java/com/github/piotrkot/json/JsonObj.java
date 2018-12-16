@@ -31,12 +31,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonValue;
-import org.cactoos.iterable.IterableOf;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.map.MapOf;
+import org.cactoos.map.MapEnvelope;
 
 /**
  * JSON object.
@@ -44,34 +42,21 @@ import org.cactoos.map.MapOf;
  * @since 1.0
  * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
-public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
-    /**
-     * Attributes of JSON object.
-     */
-    private final Map<String, JsonVal> attrs;
-
-    /**
-     * Ctor.
-     * @param attrs Object attributes.
-     */
-    public JsonObj(final Iterable<Attr> attrs) {
-        this.attrs = JsonObj.asMap(attrs);
-    }
-
-    /**
-     * Ctor.
-     * @param attributes Object attributes.
-     */
-    public JsonObj(final Attr... attributes) {
-        this(Arrays.asList(attributes));
-    }
-
+public final class JsonObj extends MapEnvelope<String, Object> implements
+    JsonVal<Map<String, ?>> {
     /**
      * Ctor.
      * @param base JSON object from API.
      */
     public JsonObj(final JsonObject base) {
-        this(base.entrySet());
+        this(
+            new Mapped<>(
+                entry -> new Attr<>(
+                    entry.getKey(), new ObjectFound(entry.getValue()).asObject()
+                ),
+                base.entrySet()
+            )
+        );
     }
 
     /**
@@ -93,22 +78,16 @@ public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
     /**
      * Ctor.
      * @param base JSON object from API.
-     * @param attributes Attributes for JSON object.
+     * @param attributes Object attributes.
      */
-    public JsonObj(final JsonObject base, final Attr... attributes) {
-        this(base, new IterableOf<>(attributes));
-    }
-
-    /**
-     * Ctor.
-     * @param base JSON object from API.
-     * @param attributes Attributes for JSON object.
-     */
-    public JsonObj(final JsonObject base, final Iterable<Attr> attributes) {
+    public JsonObj(final JsonObject base, final Iterable<Attr<?>> attributes) {
         this(
             new Joined<>(
                 new Mapped<>(
-                    entry -> new Attr.Json(entry.getKey(), entry.getValue()),
+                    entry -> new Attr<>(
+                        entry.getKey(),
+                        new ObjectFound(entry.getValue()).asObject()
+                    ),
                     base.entrySet()
                 ),
                 attributes
@@ -118,25 +97,46 @@ public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
 
     /**
      * Ctor.
+     * @param base JSON object from API.
      * @param attributes Object attributes.
      */
-    private JsonObj(final Collection<Map.Entry<String, JsonValue>> attributes) {
-        this(
-            new Mapped<>(
-                entry -> new Attr.Json(entry.getKey(), entry.getValue()),
-                attributes
-            )
-        );
+    public JsonObj(final JsonObject base, final Attr<?>... attributes) {
+        this(base, Arrays.asList(attributes));
+    }
+
+    /**
+     * Ctor.
+     * @param attributes Object attributes.
+     */
+    public JsonObj(final Collection<Attr<?>> attributes) {
+        super(() -> JsonObj.asMap(attributes));
+    }
+
+    /**
+     * Ctor.
+     * @param attributes Object attributes.
+     */
+    public JsonObj(final Attr<?>... attributes) {
+        this(Arrays.asList(attributes));
+    }
+
+    /**
+     * Ctor.
+     * @param attributes Object attributes.
+     */
+    public JsonObj(final Iterable<Attr<?>> attributes) {
+        this(new CollectionOf<>(attributes));
     }
 
     /**
      * JSON object attributes.
      * @return All attributes.
+     * @checkstyle NonStaticMethod (2 lines)
      */
-    public Iterable<Attr> attributes() {
+    public Iterable<Attr<?>> attributes() {
         return new Mapped<>(
-            entry -> new Attr.JsonV(entry.getKey(), entry.getValue()),
-            this.attrs.entrySet()
+            entry -> new Attr<>(entry.getKey(), entry.getValue()),
+            super.entrySet()
         );
     }
 
@@ -146,21 +146,22 @@ public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
      * @return True if attribute exists, false otherwise.
      */
     public boolean contains(final String name) {
-        return this.attrs.containsKey(name);
+        return this.containsKey(name);
     }
 
     /**
      * Gets attribute value for given name.
      * @param name Attribute name.
+     * @param <T> Type of return value.
      * @return JSON value.
      * @throws JsonException When parameter is not found.
      */
-    public JsonVal get(final String name) throws JsonException {
-        if (this.attrs.containsKey(name)) {
-            return this.attrs.get(name);
+    public <T> T get(final String name) throws JsonException {
+        if (this.containsKey(name)) {
+            return (T) super.get(name);
         }
         throw new JsonException(
-            String.format("attribute name \"%s\" not found", name)
+            String.format("Attribute name \"%s\" not found", name)
         );
     }
 
@@ -168,24 +169,27 @@ public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
      * Gets attribute value for given name or default.
      * @param name Attribute name.
      * @param def Default value.
+     * @param <T> Type of return value.
      * @return JSON value or default if not found.
      */
-    public JsonVal get(final String name, final JsonVal def) {
-        return this.attrs.getOrDefault(name, def);
+    public <T> T get(final String name, final T def) {
+        final T value;
+        if (this.containsKey(name)) {
+            value = (T) super.get(name);
+        } else {
+            value = def;
+        }
+        return value;
     }
 
     @Override
     public JsonObject jsonValue() {
-        JsonObjectBuilder builder = Json.createObjectBuilder();
-        for (final Map.Entry<String, JsonVal> attr : this.attrs.entrySet()) {
-            builder = builder.add(attr.getKey(), attr.getValue().jsonValue());
-        }
-        return builder.build();
+        return new JsonValueFound(this).asJsonValue().asJsonObject();
     }
 
     @Override
-    public Map<String, JsonVal> value() {
-        return new MapOf<>(this.attrs);
+    public Map<String, ?> value() {
+        return this;
     }
 
     /**
@@ -194,9 +198,9 @@ public final class JsonObj implements JsonVal<Map<String, JsonVal>> {
      * @param attrs Object attributes.
      * @return New object attributes as map ordered by inserted entries.
      */
-    private static Map<String, JsonVal> asMap(final Iterable<Attr> attrs) {
-        final Map<String, JsonVal> map = new LinkedHashMap<>();
-        for (final Attr attr : attrs) {
+    private static Map<String, Object> asMap(final Iterable<Attr<?>> attrs) {
+        final Map<String, Object> map = new LinkedHashMap<>();
+        for (final Attr<?> attr : attrs) {
             map.put(attr.name(), attr.value());
         }
         return map;

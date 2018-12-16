@@ -29,21 +29,19 @@ import java.util.Arrays;
 import java.util.Collection;
 import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonValue;
 import org.cactoos.collection.CollectionEnvelope;
 import org.cactoos.collection.CollectionOf;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
 
 /**
  * JSON array.
  *
+ * @param <T> Type of array elements.
  * @since 1.0
  */
-public final class JsonArr extends CollectionEnvelope<JsonVal> implements
-    JsonVal<Collection<JsonVal>> {
+public final class JsonArr<T> extends CollectionEnvelope<T> implements
+    JsonVal<Collection<T>> {
     /**
      * Ctor.
      * @param base JSON array from API.
@@ -70,35 +68,10 @@ public final class JsonArr extends CollectionEnvelope<JsonVal> implements
 
     /**
      * Ctor.
-     * @param base JSON array from API.
-     * @param elem Element of JSON array.
-     */
-    public JsonArr(final JsonArray base, final JsonVal elem) {
-        this(base, new IterableOf<>(elem));
-    }
-
-    /**
-     * Ctor.
-     * @param base JSON array from API.
-     * @param elems Elements of JSON array.
-     */
-    public JsonArr(final JsonArray base, final Iterable<JsonVal> elems) {
-        this(
-            new Joined<>(
-                new Mapped<>(
-                    value -> new ValueFound(value).asValue(),
-                    base.getValuesAs(JsonValue.class)
-                ),
-                elems
-            )
-        );
-    }
-
-    /**
-     * Ctor.
      * @param elems Array elements.
      */
-    public JsonArr(final JsonVal... elems) {
+    @SafeVarargs
+    public JsonArr(final T... elems) {
         this(Arrays.asList(elems));
     }
 
@@ -109,7 +82,7 @@ public final class JsonArr extends CollectionEnvelope<JsonVal> implements
     public JsonArr(final Collection<? extends JsonValue> elems) {
         this(
             new Mapped<>(
-                value -> new ValueFound(value).asValue(),
+                value -> (T) new ObjectFound(value).asObject(),
                 elems
             )
         );
@@ -119,21 +92,17 @@ public final class JsonArr extends CollectionEnvelope<JsonVal> implements
      * Ctor.
      * @param elems Array elements.
      */
-    public JsonArr(final Iterable<JsonVal> elems) {
+    public JsonArr(final Iterable<T> elems) {
         super(() -> new CollectionOf<>(elems));
     }
 
     @Override
     public JsonArray jsonValue() {
-        JsonArrayBuilder builder = Json.createArrayBuilder();
-        for (final JsonVal elem : this) {
-            builder = builder.add(elem.jsonValue());
-        }
-        return builder.build();
+        return new JsonValueFound(this).asJsonValue().asJsonArray();
     }
 
     @Override
-    public Collection<JsonVal> value() {
+    public Collection<T> value() {
         return this;
     }
 }

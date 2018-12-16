@@ -43,7 +43,7 @@ public final class FitAttrDelTest {
     @Test
     public void shouldNotDelete() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("val", "foo")
+            new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
             new FitAttrDel("test").make(obj).jsonValue().toString(),
@@ -58,7 +58,7 @@ public final class FitAttrDelTest {
     @Test
     public void shouldDeleteAttribute() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("type", "bar")
+            new Attr<>("type", "bar")
         );
         MatcherAssert.assertThat(
             new FitAttrDel("type").make(obj).jsonValue().toString(),

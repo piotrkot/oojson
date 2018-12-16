@@ -23,10 +23,7 @@
  */
 package com.github.piotrkot.json;
 
-import com.github.piotrkot.json.values.Vbool;
-import com.github.piotrkot.json.values.Vnull;
-import com.github.piotrkot.json.values.Vnum;
-import com.github.piotrkot.json.values.Vstr;
+import java.math.BigInteger;
 import javax.json.JsonArray;
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
@@ -34,57 +31,84 @@ import javax.json.JsonString;
 import javax.json.JsonValue;
 
 /**
- * JSON Value found.
+ * Object found.
  *
  * @since 1.0
  */
-public final class ValueFound {
+public final class ObjectFound {
     /**
-     * JSON value from API.
+     * JSON value.
      */
-    private final JsonValue value;
+    private final JsonValue json;
 
     /**
      * Ctor.
-     * @param value JSON value from API.
+     * @param json JSON value.
      */
-    public ValueFound(final JsonValue value) {
-        this.value = value;
+    public ObjectFound(final JsonValue json) {
+        this.json = json;
     }
 
     /**
-     * Value found from API JSON value.
-     * @return JSON value.
+     * Object found.
+     * @return Object value.
      */
-    public JsonVal asValue() {
-        final JsonVal val;
-        switch (this.value.getValueType()) {
+    public Object asObject() {
+        final Object value;
+        switch (this.json.getValueType()) {
             case OBJECT:
-                val = new JsonObj((JsonObject) this.value);
+                value = new JsonObj((JsonObject) this.json).value();
                 break;
             case STRING:
-                val = new Vstr((JsonString) this.value);
+                value = ((JsonString) this.json).getString();
                 break;
             case ARRAY:
-                val = new JsonArr((JsonArray) this.value);
+                value = new JsonArr((JsonArray) this.json).value();
                 break;
             case NUMBER:
-                val = new Vnum((JsonNumber) this.value);
+                value = this.asNumber();
                 break;
             case FALSE:
-                val = new Vbool(false);
+                value = false;
                 break;
             case TRUE:
-                val = new Vbool(true);
+                value = true;
                 break;
             case NULL:
-                val = new Vnull();
+                value = null;
                 break;
             default:
                 throw new UnsupportedOperationException(
-                    "Type not supported"
+                    "JSON type not supported"
                 );
         }
-        return val;
+        return value;
+    }
+
+    /**
+     * Number found.
+     * @return Number.
+     */
+    private Object asNumber() {
+        final Object value;
+        final JsonNumber number = (JsonNumber) this.json;
+        if (number.isIntegral()) {
+            if (number.intValue() == number.longValue()) {
+                value = number.intValue();
+            } else if (number.bigIntegerValueExact()
+                .equals(BigInteger.valueOf(number.longValue()))) {
+                value = number.longValue();
+            } else {
+                value = number.bigIntegerValueExact();
+            }
+        } else {
+            if (number.bigDecimalValue().toPlainString()
+                .equals(String.valueOf(number.doubleValue()))) {
+                value = number.doubleValue();
+            } else {
+                value = number.bigDecimalValue();
+            }
+        }
+        return value;
     }
 }

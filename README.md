@@ -8,13 +8,13 @@ Simple object-oriented Java API for JSON transformation. It is a wrapper around
 
 ## Creating JSON arrays
 
-From value objects
+From values
 
 ```java
-new JsonArr(
-    new Vbool(true),
-    new Vstr("a"),
-    new Vnum(1),
+new JsonArr<>(
+    true,
+    "a",
+    1,
     new JsonArr(),
     new JsonObj()
 );
@@ -28,11 +28,11 @@ new JsonArr(
 );
 ```
 
-or by combining JSON-P array with value objects
+or from JSON-P array
 
 ```java
-new JsonArr(
-    Json.createArrayBuilder().add(0).build(), new Vnum(1)
+new JsonArr<>(
+    Json.createArrayBuilder().add(0).build()
 );
 ```
 
@@ -42,11 +42,11 @@ From object attributes
 
 ```java
 new JsonObj(
-    new Attr.Bool("bool", true),
-    new Attr.Str("str", "a"),
-    new Attr.Num("num", 0),
-    new Attr.Arr("arr", new JsonArr()),
-    new Attr.Obj("obj", new JsonObj())
+    new Attr<>("bool", true),
+    new Attr<>("str", "a"),
+    new Attr<>("num", 0),
+    new Attr<>("arr", new JsonArr()),
+    new Attr<>("obj", new JsonObj())
 );
 ```
 
@@ -60,12 +60,11 @@ new JsonObj(
 );
 ```
 
-or by combining JSON-P object with object attributes
+or from JSON-P object
 
 ```java
 new JsonObj(
-    Json.createObjectBuilder().add("name", "John").build(),
-    new Attr.Num("age", 30)
+    Json.createObjectBuilder().add("name", "John").build()
 );
 ```
 
@@ -74,16 +73,16 @@ new JsonObj(
 In the example, numerical values are filtered and mapped to string values
 
 ```java
-JsonArr array = new JsonArr(
-    new Vnum(10),
-    new Vnum(20)
+JsonArr<Integer> array = new JsonArr<>(
+    10,
+    20
 );
-new JsonArr(
+new JsonArr<>(
     new Mapped<>(
-        elem -> new Vstr(elem.value() + " points"),
+        elem -> elem + " points",
         new Filtered<>(
-            elem -> ((Number) elem.value()).intValue() > 15,
-            array.elements()
+            elem -> elem > 15,
+            array.value()
         )
     )
 ).jsonValue().toString();
@@ -97,12 +96,12 @@ In the example, value of `num` attribute is multiplied by 2.
 
 ```java
 JsonObj object = new JsonObj(
-    new Attr.Str("str", "A"),
-    new Attr.Num("num", 1)
+    new Attr<>("str", "A"),
+    new Attr<>("num", 1)
 );
 new FitValUpd(
     "num",
-    new Vnum(((Number) object.get("num").value()).intValue() * 2)
+    (object.<Integer>get("num")) * 2
 ).make(object).jsonValue().toString();
 ```
 
@@ -113,12 +112,12 @@ with name `info` is replaced with attribute `"moreInfo"` and value `true`.
 
 ```java
 JsonObj object = new JsonObj(
-    new Attr.Str("delete", "private"),
-    new Attr.Str("info", "public info")
+    new Attr<>("delete", "private"),
+    new Attr<>("info", "public info")
 );
 new FitChain<>(
     new FitAttrDel("delete"),
-    new FitAttrRepl("info", new Attr.Bool("moreInfo", true))
+    new FitAttrRepl("info", new Attr<>("moreInfo", true))
 ).make(object).jsonValue().toString();
 ```
 
@@ -134,7 +133,7 @@ To get started, add dependency to your project:
 <dependency>
     <groupId>com.github.piotrkot</groupId>
     <artifactId>oojson</artifactId>
-    <version>1.5.0</version>
+    <version>1.6.0</version>
 </dependency>
 ```
 

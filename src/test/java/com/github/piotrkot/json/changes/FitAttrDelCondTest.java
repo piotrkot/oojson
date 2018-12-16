@@ -43,10 +43,10 @@ public final class FitAttrDelCondTest {
     @Test
     public void shouldNotDelete() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("val", "foo")
+            new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
-            new FitAttrDelCond("val", val -> val.value().equals("bar"))
+            new FitAttrDelCond<String>("val", "bar"::equals)
                 .make(obj).jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
         );
@@ -59,10 +59,10 @@ public final class FitAttrDelCondTest {
     @Test
     public void shouldNotDeleteMiss() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("val", "foo")
+            new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
-            new FitAttrDelCond("test", val -> val.value().equals("bar"))
+            new FitAttrDelCond<String>("test", "bar"::equals)
                 .make(obj).jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
         );
@@ -75,11 +75,11 @@ public final class FitAttrDelCondTest {
     @Test
     public void shouldDeleteAttribute() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("type", "bar")
+            new Attr<>("type", "bar")
         );
         MatcherAssert.assertThat(
-            new FitAttrDelCond(
-                "type", val -> ((String) val.value()).startsWith("ba")
+            new FitAttrDelCond<String>(
+                "type", val -> val.startsWith("ba")
             ).make(obj).jsonValue().toString(),
             Matchers.is("{}")
         );

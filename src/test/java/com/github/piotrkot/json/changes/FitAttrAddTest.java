@@ -45,10 +45,10 @@ public final class FitAttrAddTest {
     @Test
     public void shouldNotAdd() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("val", "foo")
+            new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
-            new FitAttrAdd(new Attr.Num("val", BigInteger.ONE)).make(obj)
+            new FitAttrAdd(new Attr<>("val", BigInteger.ONE)).make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
         );
@@ -61,10 +61,10 @@ public final class FitAttrAddTest {
     @Test
     public void shouldAddAttribute() throws Exception {
         final JsonObj obj = new JsonObj(
-            new Attr.Str("type", "bar")
+            new Attr<>("type", "bar")
         );
         MatcherAssert.assertThat(
-            new FitAttrAdd(new Attr.Num("val", BigDecimal.ZERO)).make(obj)
+            new FitAttrAdd(new Attr<>("val", BigDecimal.ZERO)).make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"type\":\"bar\",\"val\":0}")
         );
