@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonValue;
 import org.cactoos.collection.CollectionEnvelope;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Mapped;
@@ -47,7 +46,12 @@ public final class JsonArr<T> extends CollectionEnvelope<T> implements
      * @param base JSON array from API.
      */
     public JsonArr(final JsonArray base) {
-        this(base.getValuesAs(JsonValue.class));
+        this(
+            new Mapped<>(
+                elem -> (T) new ObjectFound(elem).asObject(),
+                base.iterator()
+            )
+        );
     }
 
     /**
@@ -73,19 +77,6 @@ public final class JsonArr<T> extends CollectionEnvelope<T> implements
     @SafeVarargs
     public JsonArr(final T... elems) {
         this(Arrays.asList(elems));
-    }
-
-    /**
-     * Ctor.
-     * @param elems Array elements.
-     */
-    public JsonArr(final Collection<? extends JsonValue> elems) {
-        this(
-            new Mapped<>(
-                value -> (T) new ObjectFound(value).asObject(),
-                elems
-            )
-        );
     }
 
     /**
