@@ -21,31 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.piotrkot.json.changes;
+package com.github.piotrkot.json;
 
-import com.github.piotrkot.json.Attr;
-import com.github.piotrkot.json.JsonObj;
-import org.cactoos.iterable.IterableOf;
-import org.cactoos.iterable.Joined;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Make it fit by adding attribute when there is no.
+ * Tests for attribute class.
  *
  * @since 1.0
  */
-public final class FitAttrAdd extends FitCond<JsonObj> {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class AttrTest {
     /**
-     * Ctor.
-     * @param attr Attribute to add.
+     * Should same objects be equal.
+     * @throws Exception When fails.
      */
-    public FitAttrAdd(final Attr attr) {
-        super(
-            json -> !json.contains(attr.name()),
-            json -> new JsonObj(
-                new Joined<Attr<?>>(
-                    json.attributes(),
-                    new IterableOf<>(attr)
-                )
+    @Test
+    public void shouldSameObjectsBeEqual() throws Exception {
+        MatcherAssert.assertThat(
+            new Attr<>("owner", true).equals(
+                new Attr<>("owner", true)
+            ),
+            Matchers.is(true)
+        );
+    }
+
+    /**
+     * Should same objects have the same hash code.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldSameObjectsHaveSameHash() throws Exception {
+        MatcherAssert.assertThat(
+            new Attr<>("valid", "").hashCode(),
+            Matchers.is(
+                new Attr<>("valid", "").hashCode()
             )
         );
     }

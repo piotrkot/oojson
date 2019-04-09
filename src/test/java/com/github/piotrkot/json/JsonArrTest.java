@@ -197,4 +197,32 @@ public final class JsonArrTest {
             json.jsonValue().toString(), Matchers.is(array)
         );
     }
+
+    /**
+     * Should same arrays be equal.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldSameArraysBeEqual() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonArr<>(0, 1).equals(
+                new JsonArr<>(new StringReader("[0,1]"))
+            ),
+            Matchers.is(true)
+        );
+    }
+
+    /**
+     * Should same arrays have the same hash code.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldSameArraysHaveSameHash() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonArr<>("valid", "test").hashCode(),
+            Matchers.is(
+                new JsonArr<>(new StringReader("[\"valid\",\"test\"]")).hashCode()
+            )
+        );
+    }
 }
