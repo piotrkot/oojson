@@ -44,7 +44,7 @@ public final class FitAttrRepl extends FitCond<JsonObj> {
         super(
             json -> json.contains(name),
             json -> new JsonObj(
-                new Joined<>(
+                new Joined<Attr<?>>(
                     new Filtered<>(
                         attrb -> !attrb.name().equals(name),
                         json.attributes()

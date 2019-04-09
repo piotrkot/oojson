@@ -9,7 +9,7 @@
     <description>Wrapper for Java API for JSON Processing with OOP in mind.
     </description>
     <url>https://github.com/piotrkot/simple-cli</url>
-    <version>1.6.2</version>
+    <version>1.6.3</version>
     <packaging>jar</packaging>
     <inceptionYear>2018</inceptionYear>
     <licenses>
@@ -64,7 +64,7 @@
             <plugin>
                 <groupId>com.qulice</groupId>
                 <artifactId>qulice-maven-plugin</artifactId>
-                <version>0.18.2</version>
+                <version>0.18.16</version>
                 <configuration>
                     <license>file:${basedir}/LICENSE</license>
                 </configuration>
@@ -144,7 +144,13 @@
         <dependency>
             <groupId>org.cactoos</groupId>
             <artifactId>cactoos</artifactId>
-            <version>0.28.2</version>
+            <version>0.40</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.6</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

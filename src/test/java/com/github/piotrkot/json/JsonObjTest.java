@@ -41,6 +41,7 @@ import org.junit.rules.ExpectedException;
  * @since 1.0
  * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class JsonObjTest {
     /**
      * Expected exception.
@@ -192,6 +193,34 @@ public final class JsonObjTest {
         MatcherAssert.assertThat(
             new JsonObj().get("other", new JsonArr<>()).value(),
             Matchers.instanceOf(Collection.class)
+        );
+    }
+
+    /**
+     * Should same objects be equal.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldSameObjectsBeEqual() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonObj(new Attr<>("owner", "John")).equals(
+                new JsonObj(new StringReader("{\"owner\":\"John\"}"))
+            ),
+            Matchers.is(true)
+        );
+    }
+
+    /**
+     * Should same objects have the same hash code.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldSameObjectsHaveSameHash() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonObj(new Attr<>("valid", true)).hashCode(),
+            Matchers.is(
+                new JsonObj(new StringReader("{\"valid\":true}")).hashCode()
+            )
         );
     }
 }

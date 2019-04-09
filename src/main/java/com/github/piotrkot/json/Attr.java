@@ -23,12 +23,15 @@
  */
 package com.github.piotrkot.json;
 
+import lombok.EqualsAndHashCode;
+
 /**
  * JSON object attribute.
  *
  * @param <T> Attribute type.
  * @since 1.0
  */
+@EqualsAndHashCode
 public final class Attr<T> {
     /**
      * Attribute key.

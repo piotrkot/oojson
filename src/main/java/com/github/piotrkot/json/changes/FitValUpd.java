@@ -45,7 +45,7 @@ public final class FitValUpd extends FitCond<JsonObj> {
         super(
             json -> json.contains(name),
             json -> new JsonObj(
-                new Joined<>(
+                new Joined<Attr<?>>(
                     new Filtered<>(
                         attr -> !attr.name().equals(name),
                         json.attributes()
