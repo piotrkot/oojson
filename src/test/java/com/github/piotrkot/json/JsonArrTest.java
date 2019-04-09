@@ -181,4 +181,20 @@ public final class JsonArrTest {
             Matchers.is("[\"true\"]")
         );
     }
+
+    /**
+     * Should create object based on iterable and not iterator.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldIterateTwice() throws Exception {
+        final String array = "[1,2,3]";
+        final JsonArr<Integer> json = new JsonArr<>(new StringReader(array));
+        MatcherAssert.assertThat(
+            json.jsonValue().toString(), Matchers.is(array)
+        );
+        MatcherAssert.assertThat(
+            json.jsonValue().toString(), Matchers.is(array)
+        );
+    }
 }
