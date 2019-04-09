@@ -49,7 +49,7 @@ public final class JsonArr<T> extends CollectionEnvelope<T> implements
         this(
             new Mapped<>(
                 elem -> (T) new ObjectFound(elem).asObject(),
-                base.iterator()
+                base
             )
         );
     }
