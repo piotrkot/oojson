@@ -9,7 +9,7 @@
     <description>Wrapper for Java API for JSON Processing with OOP in mind.
     </description>
     <url>https://github.com/piotrkot/simple-cli</url>
-    <version>1.6.3</version>
+    <version>1.6.4</version>
     <packaging>jar</packaging>
     <inceptionYear>2018</inceptionYear>
     <licenses>
@@ -144,7 +144,7 @@
         <dependency>
             <groupId>org.cactoos</groupId>
             <artifactId>cactoos</artifactId>
-            <version>0.40</version>
+            <version>0.41</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
