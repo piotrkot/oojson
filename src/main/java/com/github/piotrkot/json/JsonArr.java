@@ -27,11 +27,12 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArray;
-import org.cactoos.collection.CollectionEnvelope;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListEnvelope;
+import org.cactoos.list.ListOf;
 
 /**
  * JSON array.
@@ -39,7 +40,7 @@ import org.cactoos.iterable.Mapped;
  * @param <T> Type of array elements.
  * @since 1.0
  */
-public final class JsonArr<T> extends CollectionEnvelope<T> implements
+public final class JsonArr<T> extends ListEnvelope<T> implements
     JsonVal<Collection<T>> {
     /**
      * Ctor.
@@ -84,7 +85,7 @@ public final class JsonArr<T> extends CollectionEnvelope<T> implements
      * @param elems Array elements.
      */
     public JsonArr(final Iterable<T> elems) {
-        super(() -> new CollectionOf<>(elems));
+        super(() -> new ListOf<>(elems));
     }
 
     @Override
@@ -93,7 +94,7 @@ public final class JsonArr<T> extends CollectionEnvelope<T> implements
     }
 
     @Override
-    public Collection<T> value() {
+    public List<T> value() {
         return this;
     }
 }
