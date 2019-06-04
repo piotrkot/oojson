@@ -61,4 +61,25 @@ public final class AttrTest {
             )
         );
     }
+
+    /**
+     * Should be toString method.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldBeToString() throws Exception {
+        MatcherAssert.assertThat(
+            new Attr<>(
+                "object",
+                new JsonObj(
+                    new Attr<>("b", true),
+                    new Attr<>("s", "a"),
+                    new Attr<>("n", 0.0),
+                    new Attr<>("a", new JsonArr<>()),
+                    new Attr<>("o", new JsonObj())
+                )
+            ).toString(),
+            Matchers.is("Attr(key=object, obj={b=true, s=a, n=0.0, a=[], o={}})")
+        );
+    }
 }
