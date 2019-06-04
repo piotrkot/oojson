@@ -24,6 +24,7 @@
 package com.github.piotrkot.json;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * JSON object attribute.
@@ -32,6 +33,7 @@ import lombok.EqualsAndHashCode;
  * @since 1.0
  */
 @EqualsAndHashCode
+@ToString
 public final class Attr<T> {
     /**
      * Attribute key.
