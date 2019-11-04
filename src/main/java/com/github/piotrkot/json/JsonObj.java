@@ -106,6 +106,29 @@ public final class JsonObj extends MapEnvelope<String, Object> implements
 
     /**
      * Ctor.
+     * @param base JSON object.
+     * @param attributes Object attributes.
+     */
+    public JsonObj(final JsonObj base, final Iterable<Attr<?>> attributes) {
+        this(
+            new Joined<>(
+                base.attributes(),
+                attributes
+            )
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param base JSON object.
+     * @param attributes Object attributes.
+     */
+    public JsonObj(final JsonObj base, final Attr<?>... attributes) {
+        this(base, Arrays.asList(attributes));
+    }
+
+    /**
+     * Ctor.
      * @param attributes Object attributes.
      */
     public JsonObj(final Collection<Attr<?>> attributes) {

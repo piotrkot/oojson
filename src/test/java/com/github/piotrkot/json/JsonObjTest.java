@@ -116,6 +116,23 @@ public final class JsonObjTest {
     }
 
     /**
+     * Should create JSON object from existing JSON object and attributes.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateObjFromObjAndAttr() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonObj(
+                new JsonObj(
+                    new Attr<>("first", "Tom")
+                ),
+                new Attr<>("id", 1)
+            ).jsonValue().toString(),
+            Matchers.is("{\"first\":\"Tom\",\"id\":1}")
+        );
+    }
+
+    /**
      * Should return value of object.
      * @throws Exception When fails.
      */
