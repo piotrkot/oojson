@@ -101,6 +101,22 @@ public final class JsonObjTest {
     }
 
     /**
+     * Should create JSON object from bytes array.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldCreateObjBytes() throws Exception {
+        final String obj =
+            "{\"f\":true,\"y\":\"\",\"z\":[\"Z\"],\"x\":{\"X\":0}}";
+        MatcherAssert.assertThat(
+            new JsonObj(
+                obj.getBytes(StandardCharsets.UTF_8)
+            ).jsonValue().toString(),
+            Matchers.is(obj)
+        );
+    }
+
+    /**
      * Should create JSON object from string with API.
      * @throws Exception When fails.
      */
@@ -237,6 +253,26 @@ public final class JsonObjTest {
             new JsonObj(new Attr<>("valid", true)).hashCode(),
             Matchers.is(
                 new JsonObj(new StringReader("{\"valid\":true}")).hashCode()
+            )
+        );
+    }
+
+    /**
+     * Should same objects with attributes have the same hash code.
+     * @throws Exception When fails.
+     */
+    @Test
+    public void shouldSameAttrObjectsHaveSameHash() throws Exception {
+        MatcherAssert.assertThat(
+            new JsonObj(
+                new Attr<>("a1", "v1"),
+                new Attr<>("a2", "v2")
+            ).hashCode(),
+            Matchers.is(
+                new JsonObj(
+                    new Attr<>("a2", "v2"),
+                    new Attr<>("a1", "v1")
+                ).hashCode()
             )
         );
     }
