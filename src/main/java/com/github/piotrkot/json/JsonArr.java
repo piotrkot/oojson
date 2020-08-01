@@ -85,7 +85,7 @@ public final class JsonArr<T> extends ListEnvelope<T> implements
      * @param elems Array elements.
      */
     public JsonArr(final Iterable<T> elems) {
-        super(() -> new ListOf<>(elems));
+        super(new ListOf<>(elems));
     }
 
     @Override

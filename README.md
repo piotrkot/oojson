@@ -133,7 +133,7 @@ To get started, add dependency to your project:
 <dependency>
     <groupId>com.github.piotrkot</groupId>
     <artifactId>oojson</artifactId>
-    <version>1.6.6</version>
+    <version>1.6.7</version>
 </dependency>
 ```
 

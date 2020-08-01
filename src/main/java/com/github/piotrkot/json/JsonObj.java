@@ -23,6 +23,8 @@
  */
 package com.github.piotrkot.json;
 
+import com.github.piotrkot.json.cactoos.MapEnvelope;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Arrays;
@@ -31,10 +33,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.json.Json;
 import javax.json.JsonObject;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.map.MapEnvelope;
+import org.cactoos.list.ListOf;
 
 /**
  * JSON object.
@@ -73,6 +74,14 @@ public final class JsonObj extends MapEnvelope<String, Object> implements
      */
     public JsonObj(final InputStream input) {
         this(Json.createReader(input).readObject());
+    }
+
+    /**
+     * Ctor.
+     * @param bytes Byte array.
+     */
+    public JsonObj(final byte[] bytes) {
+        this(new ByteArrayInputStream(bytes));
     }
 
     /**
@@ -148,7 +157,7 @@ public final class JsonObj extends MapEnvelope<String, Object> implements
      * @param attributes Object attributes.
      */
     public JsonObj(final Iterable<Attr<?>> attributes) {
-        this(new CollectionOf<>(attributes));
+        this(new ListOf<>(attributes));
     }
 
     /**
