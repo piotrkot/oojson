@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 piotrkot
+ * Copyright (c) 2018-2021 piotrkot
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ public final class FitAttrRepl extends FitCond<JsonObj> {
      * @param name Attribute with given name to be replaced.
      * @param attr New attribute.
      */
-    public FitAttrRepl(final String name, final Attr attr) {
+    public FitAttrRepl(final String name, final Attr<?> attr) {
         super(
             json -> json.contains(name),
             json -> new JsonObj(

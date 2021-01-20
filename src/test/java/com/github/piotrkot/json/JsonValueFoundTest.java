@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 piotrkot
+ * Copyright (c) 2018-2021 piotrkot
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ import java.util.Date;
 import javax.json.JsonNumber;
 import javax.json.JsonString;
 import javax.json.JsonValue;
-import org.cactoos.collection.CollectionOf;
+import org.cactoos.list.ListOf;
 import org.cactoos.map.MapOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -57,7 +57,7 @@ public final class JsonValueFoundTest {
     @Test
     public void shouldFindArr() throws Exception {
         MatcherAssert.assertThat(
-            new JsonValueFound(new CollectionOf<>()).asJsonValue().toString(),
+            new JsonValueFound(new ListOf<>()).asJsonValue().toString(),
             Matchers.is("[]")
         );
     }

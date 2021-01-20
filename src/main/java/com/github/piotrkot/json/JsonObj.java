@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 piotrkot
+ * Copyright (c) 2018-2021 piotrkot
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
  */
 package com.github.piotrkot.json;
 
-import com.github.piotrkot.json.cactoos.MapEnvelope;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Reader;
@@ -36,6 +35,7 @@ import javax.json.JsonObject;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;
+import org.cactoos.map.MapEnvelope;
 
 /**
  * JSON object.
@@ -91,7 +91,7 @@ public final class JsonObj extends MapEnvelope<String, Object> implements
      */
     public JsonObj(final JsonObject base, final Iterable<Attr<?>> attributes) {
         this(
-            new Joined<>(
+            new Joined<Attr<?>>(
                 new Mapped<>(
                     entry -> new Attr<>(
                         entry.getKey(),
@@ -120,7 +120,7 @@ public final class JsonObj extends MapEnvelope<String, Object> implements
      */
     public JsonObj(final JsonObj base, final Iterable<Attr<?>> attributes) {
         this(
-            new Joined<>(
+            new Joined<Attr<?>>(
                 base.attributes(),
                 attributes
             )
@@ -141,7 +141,7 @@ public final class JsonObj extends MapEnvelope<String, Object> implements
      * @param attributes Object attributes.
      */
     public JsonObj(final Collection<Attr<?>> attributes) {
-        super(() -> JsonObj.asMap(attributes));
+        super(JsonObj.asMap(attributes));
     }
 
     /**
