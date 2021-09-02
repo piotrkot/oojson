@@ -23,9 +23,9 @@
  */
 package com.github.piotrkot.json.changes;
 
+import com.github.piotrkot.json.Condition;
 import com.github.piotrkot.json.Fit;
 import com.github.piotrkot.json.Method;
-import java.util.function.Predicate;
 
 /**
  * Conditional fit with else statement.
@@ -37,7 +37,7 @@ public class FitCondElse<T> implements Fit<T> {
     /**
      * Condition to make the fit.
      */
-    private final Predicate<T> cond;
+    private final Condition<T> cond;
 
     /**
      * Fitting method when condition is satisfied.
@@ -55,7 +55,7 @@ public class FitCondElse<T> implements Fit<T> {
      * @param satisf Fitting method when condition is satisfied.
      * @param notsatisf Fitting method when condition is not satisfied.
      */
-    public FitCondElse(final Predicate<T> cond, final Method<T> satisf,
+    public FitCondElse(final Condition<T> cond, final Method<T> satisf,
         final Method<T> notsatisf) {
         this.cond = cond;
         this.satisf = satisf;

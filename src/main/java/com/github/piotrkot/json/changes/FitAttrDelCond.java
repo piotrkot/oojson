@@ -23,9 +23,9 @@
  */
 package com.github.piotrkot.json.changes;
 
+import com.github.piotrkot.json.Condition;
 import com.github.piotrkot.json.Fit;
 import com.github.piotrkot.json.JsonObj;
-import java.util.function.Predicate;
 import org.cactoos.iterable.Filtered;
 
 /**
@@ -42,7 +42,7 @@ public final class FitAttrDelCond<T> implements Fit<JsonObj> {
     /**
      * Condition that value of the to be deleted attribute must satisfy.
      */
-    private final Predicate<T> cond;
+    private final Condition<T> cond;
 
     /**
      * Ctor.
@@ -50,7 +50,7 @@ public final class FitAttrDelCond<T> implements Fit<JsonObj> {
      * @param cond Condition that value of the to be deleted attribute
      *  must satisfy.
      */
-    public FitAttrDelCond(final String name, final Predicate<T> cond) {
+    public FitAttrDelCond(final String name, final Condition<T> cond) {
         this.name = name;
         this.cond = cond;
     }

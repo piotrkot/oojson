@@ -21,47 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.piotrkot.json.changes;
-
-import com.github.piotrkot.json.Condition;
-import com.github.piotrkot.json.Fit;
-import com.github.piotrkot.json.Method;
+package com.github.piotrkot.json;
 
 /**
- * Conditional fit.
+ * Condition to verify.
  *
  * @param <T> Type of input.
  * @since 1.0
  */
-public class FitCond<T> implements Fit<T> {
+public interface Condition<T> {
     /**
-     * Condition to make the fit.
+     * Evaluates this condition on the given argument.
+     * @param input Input
+     * @return Value {@code true} if the input argument matches the condition,
+     *  otherwise {@code false}
+     * @throws Exception When fails
      */
-    private final Condition<T> cond;
-
-    /**
-     * Fitting method.
-     */
-    private final Method<T> method;
-
-    /**
-     * Ctor.
-     * @param cond Condition to make the fit.
-     * @param method Fitting method.
-     */
-    public FitCond(final Condition<T> cond, final Method<T> method) {
-        this.cond = cond;
-        this.method = method;
-    }
-
-    @Override
-    public final T make(final T input) throws Exception {
-        final T result;
-        if (this.cond.test(input)) {
-            result = this.method.apply(input);
-        } else {
-            result = input;
-        }
-        return result;
-    }
+    boolean test(T input) throws Exception;
 }
