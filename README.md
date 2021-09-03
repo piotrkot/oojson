@@ -85,7 +85,7 @@ new JsonArr<>(
             array.value()
         )
     )
-).jsonValue().toString();
+);
 ```
 
 The result is array `["20 points"]`.
@@ -102,7 +102,7 @@ JsonObj object = new JsonObj(
 new FitValUpd(
     "num",
     (object.<Integer>get("num")) * 2
-).make(object).jsonValue().toString();
+).make(object);
 ```
 
 The result is object `{"str":"A","num":2}`.
@@ -118,7 +118,7 @@ JsonObj object = new JsonObj(
 new FitChain<>(
     new FitAttrDel("delete"),
     new FitAttrRepl("info", new Attr<>("moreInfo", true))
-).make(object).jsonValue().toString();
+).make(object);
 ```
 
 The result is object `{"moreInfo":true}`.
