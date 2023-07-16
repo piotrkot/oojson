@@ -27,7 +27,7 @@ import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for replacing of attribute.
@@ -35,13 +35,13 @@ import org.junit.Test;
  * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class FitAttrReplTest {
+final class FitAttrReplTest {
     /**
      * Should not replace attribute when absent.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldNotReplace() throws Exception {
+    void shouldNotReplace() throws Exception {
         final JsonObj obj = new JsonObj(
             new Attr<>("val", "foo")
         );
@@ -57,7 +57,7 @@ public final class FitAttrReplTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldReplaceAttribute() throws Exception {
+    void shouldReplaceAttribute() throws Exception {
         final JsonObj obj = new JsonObj(
             new Attr<>("type", "bar"),
             new Attr<>("aa", true)

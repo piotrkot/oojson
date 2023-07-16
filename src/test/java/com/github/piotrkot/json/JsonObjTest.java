@@ -31,9 +31,8 @@ import java.util.Map;
 import javax.json.Json;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for JSON object.
@@ -42,20 +41,14 @@ import org.junit.rules.ExpectedException;
  * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class JsonObjTest {
-    /**
-     * Expected exception.
-     */
-    @Rule
-    public final ExpectedException exp = ExpectedException.none();
-
+final class JsonObjTest {
     /**
      * Should create JSON object.
      * @throws Exception When fails.
      * @checkstyle MagicNumber (10 lines)
      */
     @Test
-    public void shouldCreateObj() throws Exception {
+    void shouldCreateObj() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj(
                 new Attr<>("b", true),
@@ -73,7 +66,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateObjString() throws Exception {
+    void shouldCreateObjString() throws Exception {
         final String obj =
             "{\"b\":false,\"s\":\"a\",\"n\":0,\"a\":[],\"o\":{}}";
         MatcherAssert.assertThat(
@@ -87,7 +80,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateObjStream() throws Exception {
+    void shouldCreateObjStream() throws Exception {
         final String obj =
             "{\"f\":false,\"y\":\"\",\"z\":[\"Z\"],\"x\":{\"X\":0}}";
         MatcherAssert.assertThat(
@@ -105,7 +98,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateObjBytes() throws Exception {
+    void shouldCreateObjBytes() throws Exception {
         final String obj =
             "{\"f\":true,\"y\":\"\",\"z\":[\"Z\"],\"x\":{\"X\":0}}";
         MatcherAssert.assertThat(
@@ -121,7 +114,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateObjStringApi() throws Exception {
+    void shouldCreateObjStringApi() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj(
                 Json.createObjectBuilder().add("name", "Mark").build(),
@@ -136,7 +129,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateObjFromObjAndAttr() throws Exception {
+    void shouldCreateObjFromObjAndAttr() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj(
                 new JsonObj(
@@ -153,7 +146,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldReturnValue() throws Exception {
+    void shouldReturnValue() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj().value(),
             Matchers.instanceOf(Map.class)
@@ -165,7 +158,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldGetObjAttr() throws Exception {
+    void shouldGetObjAttr() throws Exception {
         final String empty = "empty";
         MatcherAssert.assertThat(
             new JsonObj(
@@ -180,17 +173,15 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldNotGetObjAttr() throws Exception {
-        this.exp.expect(
-            Matchers.allOf(
-                Matchers.isA(JsonException.class),
-                Matchers.hasProperty(
-                    "message",
-                    Matchers.is("Attribute name \"missing\" not found")
-                )
-            )
+    void shouldNotGetObjAttr() throws Exception {
+        final JsonException thrown = Assertions.assertThrows(
+            JsonException.class,
+            () -> new JsonObj().get("missing")
         );
-        new JsonObj().get("missing");
+        MatcherAssert.assertThat(
+            thrown.getMessage(),
+            Matchers.is("Attribute name \"missing\" not found")
+        );
     }
 
     /**
@@ -198,7 +189,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldGetSimpleObjDefAttr() throws Exception {
+    void shouldGetSimpleObjDefAttr() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj().get("miss", "X"),
             Matchers.is("X")
@@ -210,7 +201,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldGetSimpleObjNotDefAttr() throws Exception {
+    void shouldGetSimpleObjNotDefAttr() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj(new Attr<>("M", "Y")).get("M", "X"),
             Matchers.is("Y")
@@ -222,7 +213,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldGetComplexObjDefAttr() throws Exception {
+    void shouldGetComplexObjDefAttr() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj().get("other", new JsonArr<>()).value(),
             Matchers.instanceOf(Collection.class)
@@ -234,7 +225,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldSameObjectsBeEqual() throws Exception {
+    void shouldSameObjectsBeEqual() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj(new Attr<>("owner", "John")).equals(
                 new JsonObj(new StringReader("{\"owner\":\"John\"}"))
@@ -248,7 +239,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldSameObjectsHaveSameHash() throws Exception {
+    void shouldSameObjectsHaveSameHash() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj(new Attr<>("valid", true)).hashCode(),
             Matchers.is(
@@ -262,7 +253,7 @@ public final class JsonObjTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldSameAttrObjectsHaveSameHash() throws Exception {
+    void shouldSameAttrObjectsHaveSameHash() throws Exception {
         MatcherAssert.assertThat(
             new JsonObj(
                 new Attr<>("a1", "v1"),

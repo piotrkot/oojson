@@ -33,9 +33,8 @@ import org.cactoos.list.ListOf;
 import org.cactoos.map.MapOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for values found.
@@ -43,19 +42,13 @@ import org.junit.rules.ExpectedException;
  * @since 1.0
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class JsonValueFoundTest {
-    /**
-     * Expected exception.
-     */
-    @Rule
-    public final ExpectedException exp = ExpectedException.none();
-
+final class JsonValueFoundTest {
     /**
      * Should find JSON array.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindArr() throws Exception {
+    void shouldFindArr() throws Exception {
         MatcherAssert.assertThat(
             new JsonValueFound(new ListOf<>()).asJsonValue().toString(),
             Matchers.is("[]")
@@ -67,7 +60,7 @@ public final class JsonValueFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindObj() throws Exception {
+    void shouldFindObj() throws Exception {
         MatcherAssert.assertThat(
             new JsonValueFound(new MapOf<>()).asJsonValue().toString(),
             Matchers.is("{}")
@@ -79,7 +72,7 @@ public final class JsonValueFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindStr() throws Exception {
+    void shouldFindStr() throws Exception {
         MatcherAssert.assertThat(
             new JsonValueFound("").asJsonValue(),
             Matchers.instanceOf(JsonString.class)
@@ -91,7 +84,7 @@ public final class JsonValueFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindInt() throws Exception {
+    void shouldFindInt() throws Exception {
         MatcherAssert.assertThat(
             new JsonValueFound(0).asJsonValue(),
             Matchers.instanceOf(JsonNumber.class)
@@ -103,7 +96,7 @@ public final class JsonValueFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindLong() throws Exception {
+    void shouldFindLong() throws Exception {
         MatcherAssert.assertThat(
             new JsonValueFound(1L).asJsonValue(),
             Matchers.instanceOf(JsonNumber.class)
@@ -115,7 +108,7 @@ public final class JsonValueFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindDouble() throws Exception {
+    void shouldFindDouble() throws Exception {
         MatcherAssert.assertThat(
             // @checkstyle MagicNumber (1 line)
             new JsonValueFound(.1).asJsonValue(),
@@ -128,7 +121,7 @@ public final class JsonValueFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindBigInteger() throws Exception {
+    void shouldFindBigInteger() throws Exception {
         MatcherAssert.assertThat(
             new JsonValueFound(BigInteger.ONE).asJsonValue(),
             Matchers.instanceOf(JsonNumber.class)
@@ -140,7 +133,7 @@ public final class JsonValueFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindBigDecimal() throws Exception {
+    void shouldFindBigDecimal() throws Exception {
         MatcherAssert.assertThat(
             new JsonValueFound(BigDecimal.TEN).asJsonValue(),
             Matchers.instanceOf(JsonNumber.class)
@@ -152,7 +145,7 @@ public final class JsonValueFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindBoolF() throws Exception {
+    void shouldFindBoolF() throws Exception {
         MatcherAssert.assertThat(
             new JsonValueFound(false).asJsonValue(),
             Matchers.is(JsonValue.FALSE)
@@ -164,7 +157,7 @@ public final class JsonValueFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindBoolT() throws Exception {
+    void shouldFindBoolT() throws Exception {
         MatcherAssert.assertThat(
             new JsonValueFound(true).asJsonValue(),
             Matchers.is(JsonValue.TRUE)
@@ -176,7 +169,7 @@ public final class JsonValueFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindNull() throws Exception {
+    void shouldFindNull() throws Exception {
         MatcherAssert.assertThat(
             new JsonValueFound(null).asJsonValue(),
             Matchers.is(JsonValue.NULL)
@@ -188,16 +181,14 @@ public final class JsonValueFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldNotFindDate() throws Exception {
-        this.exp.expect(
-            Matchers.allOf(
-                Matchers.isA(UnsupportedOperationException.class),
-                Matchers.hasProperty(
-                    "message",
-                    Matchers.is("\"class java.util.Date\" not supported")
-                )
-            )
+    void shouldNotFindDate() throws Exception {
+        final UnsupportedOperationException thrown = Assertions.assertThrows(
+            UnsupportedOperationException.class,
+            () -> new JsonValueFound(new Date()).asJsonValue()
         );
-        new JsonValueFound(new Date()).asJsonValue();
+        MatcherAssert.assertThat(
+            thrown.getMessage(),
+            Matchers.is("\"class java.util.Date\" not supported")
+        );
     }
 }

@@ -27,7 +27,7 @@ import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for change chain.
@@ -35,13 +35,13 @@ import org.junit.Test;
  * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class FitChainTest {
+final class FitChainTest {
     /**
      * Should make chain changes.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldMakeChain() throws Exception {
+    void shouldMakeChain() throws Exception {
         final JsonObj obj = new JsonObj(
             new Attr<>("val", "foo")
         );

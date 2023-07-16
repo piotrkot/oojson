@@ -31,9 +31,7 @@ import javax.json.Json;
 import javax.json.JsonValue;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for object found class.
@@ -41,19 +39,13 @@ import org.junit.rules.ExpectedException;
  * @since 1.0
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class ObjectFoundTest {
-    /**
-     * Expected exception.
-     */
-    @Rule
-    public final ExpectedException exp = ExpectedException.none();
-
+final class ObjectFoundTest {
     /**
      * Should find Boolean false.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindBoolFalse() throws Exception {
+    void shouldFindBoolFalse() throws Exception {
         MatcherAssert.assertThat(
             new ObjectFound(JsonValue.FALSE).asObject(),
             Matchers.is(false)
@@ -65,7 +57,7 @@ public final class ObjectFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindBoolTrue() throws Exception {
+    void shouldFindBoolTrue() throws Exception {
         MatcherAssert.assertThat(
             new ObjectFound(JsonValue.TRUE).asObject(),
             Matchers.is(true)
@@ -77,7 +69,7 @@ public final class ObjectFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindString() throws Exception {
+    void shouldFindString() throws Exception {
         MatcherAssert.assertThat(
             new ObjectFound(Json.createValue("")).asObject(),
             Matchers.is("")
@@ -89,7 +81,7 @@ public final class ObjectFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindNull() throws Exception {
+    void shouldFindNull() throws Exception {
         MatcherAssert.assertThat(
             new ObjectFound(JsonValue.NULL).asObject(),
             Matchers.nullValue()
@@ -101,7 +93,7 @@ public final class ObjectFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindArray() throws Exception {
+    void shouldFindArray() throws Exception {
         MatcherAssert.assertThat(
             new ObjectFound(JsonValue.EMPTY_JSON_ARRAY).asObject(),
             Matchers.instanceOf(Collection.class)
@@ -113,7 +105,7 @@ public final class ObjectFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindObject() throws Exception {
+    void shouldFindObject() throws Exception {
         MatcherAssert.assertThat(
             new ObjectFound(JsonValue.EMPTY_JSON_OBJECT).asObject(),
             Matchers.instanceOf(Map.class)
@@ -125,7 +117,7 @@ public final class ObjectFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindInt() throws Exception {
+    void shouldFindInt() throws Exception {
         MatcherAssert.assertThat(
             new ObjectFound(Json.createValue(0)).asObject(),
             Matchers.instanceOf(Integer.class)
@@ -137,7 +129,7 @@ public final class ObjectFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindLong() throws Exception {
+    void shouldFindLong() throws Exception {
         MatcherAssert.assertThat(
             new ObjectFound(Json.createValue(Long.MAX_VALUE)).asObject(),
             Matchers.instanceOf(Long.class)
@@ -149,7 +141,7 @@ public final class ObjectFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindDouble() throws Exception {
+    void shouldFindDouble() throws Exception {
         MatcherAssert.assertThat(
             // @checkstyle MagicNumber (1 line)
             new ObjectFound(Json.createValue(0.3)).asObject(),
@@ -162,7 +154,7 @@ public final class ObjectFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindBigInteger() throws Exception {
+    void shouldFindBigInteger() throws Exception {
         MatcherAssert.assertThat(
             new ObjectFound(
                 Json.createValue(new BigInteger("9223372036854775808"))
@@ -176,7 +168,7 @@ public final class ObjectFoundTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldFindBigDecimal() throws Exception {
+    void shouldFindBigDecimal() throws Exception {
         MatcherAssert.assertThat(
             new ObjectFound(
                 Json.createValue(new BigDecimal("9223372036854775808.1111"))

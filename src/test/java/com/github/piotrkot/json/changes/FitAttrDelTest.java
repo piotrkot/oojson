@@ -27,7 +27,7 @@ import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for deletion of attribute.
@@ -35,13 +35,13 @@ import org.junit.Test;
  * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class FitAttrDelTest {
+final class FitAttrDelTest {
     /**
      * Should not delete attribute when missing.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldNotDelete() throws Exception {
+    void shouldNotDelete() throws Exception {
         final JsonObj obj = new JsonObj(
             new Attr<>("val", "foo")
         );
@@ -56,7 +56,7 @@ public final class FitAttrDelTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldDeleteAttribute() throws Exception {
+    void shouldDeleteAttribute() throws Exception {
         final JsonObj obj = new JsonObj(
             new Attr<>("type", "bar")
         );
