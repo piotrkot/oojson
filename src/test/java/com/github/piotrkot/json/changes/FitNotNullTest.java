@@ -27,7 +27,7 @@ import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for removal of nulls.
@@ -35,13 +35,13 @@ import org.junit.Test;
  * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class FitNotNullTest {
+final class FitNotNullTest {
     /**
      * Should not delete attribute when nested.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldNotDelete() throws Exception {
+    void shouldNotDelete() throws Exception {
         final JsonObj obj = new JsonObj(
             new Attr<>(
                 "val",
@@ -61,7 +61,7 @@ public final class FitNotNullTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldDelete() throws Exception {
+    void shouldDelete() throws Exception {
         final JsonObj obj = new JsonObj(
             new Attr<>("null", null)
         );

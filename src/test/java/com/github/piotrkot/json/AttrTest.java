@@ -25,7 +25,7 @@ package com.github.piotrkot.json;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for attribute class.
@@ -33,13 +33,13 @@ import org.junit.Test;
  * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class AttrTest {
+final class AttrTest {
     /**
      * Should same objects be equal.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldSameObjectsBeEqual() throws Exception {
+    void shouldSameObjectsBeEqual() throws Exception {
         MatcherAssert.assertThat(
             new Attr<>("owner", true).equals(
                 new Attr<>("owner", true)
@@ -53,7 +53,7 @@ public final class AttrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldSameObjectsHaveSameHash() throws Exception {
+    void shouldSameObjectsHaveSameHash() throws Exception {
         MatcherAssert.assertThat(
             new Attr<>("valid", "").hashCode(),
             Matchers.is(
@@ -67,7 +67,7 @@ public final class AttrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldBeToString() throws Exception {
+    void shouldBeToString() throws Exception {
         MatcherAssert.assertThat(
             new Attr<>(
                 "object",

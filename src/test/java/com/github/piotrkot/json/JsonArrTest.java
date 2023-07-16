@@ -33,7 +33,7 @@ import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.Mapped;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for JSON array.
@@ -42,13 +42,13 @@ import org.junit.Test;
  * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public final class JsonArrTest {
+final class JsonArrTest {
     /**
      * Should create JSON array.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateArr() throws Exception {
+    void shouldCreateArr() throws Exception {
         MatcherAssert.assertThat(
             new JsonArr<>(
                 true,
@@ -66,7 +66,7 @@ public final class JsonArrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateBoolArr() throws Exception {
+    void shouldCreateBoolArr() throws Exception {
         MatcherAssert.assertThat(
             new JsonArr<>(
                 true, false, true
@@ -80,7 +80,7 @@ public final class JsonArrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateStrArr() throws Exception {
+    void shouldCreateStrArr() throws Exception {
         MatcherAssert.assertThat(
             new JsonArr<>(
                 "a", "ba", "acd"
@@ -94,7 +94,7 @@ public final class JsonArrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateNumArr() throws Exception {
+    void shouldCreateNumArr() throws Exception {
         MatcherAssert.assertThat(
             new JsonArr<>(
                 // @checkstyle MagicNumberCheck (1 line)
@@ -109,7 +109,7 @@ public final class JsonArrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateArrString() throws Exception {
+    void shouldCreateArrString() throws Exception {
         final String array = "[false,\"x\",1,[],{}]";
         MatcherAssert.assertThat(
             new JsonArr(new StringReader(array)).jsonValue().toString(),
@@ -122,7 +122,7 @@ public final class JsonArrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateArrStream() throws Exception {
+    void shouldCreateArrStream() throws Exception {
         final String array = "[false,\"y\",2,[\"Z\"],{\"x\":0}]";
         MatcherAssert.assertThat(
             new JsonArr(
@@ -139,7 +139,7 @@ public final class JsonArrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldCreateArrApiCopy() throws Exception {
+    void shouldCreateArrApiCopy() throws Exception {
         MatcherAssert.assertThat(
             new JsonArr(JsonArray.EMPTY_JSON_ARRAY).jsonValue().toString(),
             Matchers.is("[]")
@@ -151,7 +151,7 @@ public final class JsonArrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldReturnValue() throws Exception {
+    void shouldReturnValue() throws Exception {
         MatcherAssert.assertThat(
             new JsonArr<>().value(),
             Matchers.instanceOf(Collection.class)
@@ -165,7 +165,7 @@ public final class JsonArrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldTransferArr() throws Exception {
+    void shouldTransferArr() throws Exception {
         MatcherAssert.assertThat(
             new JsonArr<>(
                 new Mapped<>(
@@ -187,7 +187,7 @@ public final class JsonArrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldIterateTwice() throws Exception {
+    void shouldIterateTwice() throws Exception {
         final String array = "[1,2,3]";
         final JsonArr<Integer> json = new JsonArr<>(new StringReader(array));
         MatcherAssert.assertThat(
@@ -203,7 +203,7 @@ public final class JsonArrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldSameArraysBeEqual() throws Exception {
+    void shouldSameArraysBeEqual() throws Exception {
         MatcherAssert.assertThat(
             new JsonArr<>(0, 1).equals(
                 new JsonArr<>(new StringReader("[0,1]"))
@@ -217,7 +217,7 @@ public final class JsonArrTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldSameArraysHaveSameHash() throws Exception {
+    void shouldSameArraysHaveSameHash() throws Exception {
         MatcherAssert.assertThat(
             new JsonArr<>("valid", "test").hashCode(),
             Matchers.is(

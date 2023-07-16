@@ -29,7 +29,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for adding of attribute.
@@ -37,13 +37,13 @@ import org.junit.Test;
  * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class FitAttrAddTest {
+final class FitAttrAddTest {
     /**
      * Should not add attribute when present.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldNotAdd() throws Exception {
+    void shouldNotAdd() throws Exception {
         final JsonObj obj = new JsonObj(
             new Attr<>("val", "foo")
         );
@@ -59,7 +59,7 @@ public final class FitAttrAddTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldAddAttribute() throws Exception {
+    void shouldAddAttribute() throws Exception {
         final JsonObj obj = new JsonObj(
             new Attr<>("type", "bar")
         );

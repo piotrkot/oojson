@@ -27,7 +27,7 @@ import com.github.piotrkot.json.Attr;
 import com.github.piotrkot.json.JsonObj;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for Update value or add.
@@ -35,13 +35,13 @@ import org.junit.Test;
  * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class FitValUpdOrAddTest {
+final class FitValUpdOrAddTest {
     /**
      * Should add value for missing attribute.
      * @throws Exception When fails.
      */
     @Test
-    public void shouldAddValue() throws Exception {
+    void shouldAddValue() throws Exception {
         final JsonObj obj = new JsonObj(
             new Attr<>("val", "foo")
         );
@@ -57,7 +57,7 @@ public final class FitValUpdOrAddTest {
      * @throws Exception When fails.
      */
     @Test
-    public void shouldUpdateValue() throws Exception {
+    void shouldUpdateValue() throws Exception {
         final JsonObj obj = new JsonObj(
             new Attr<>("type", "bar"),
             new Attr<>("boo", "bar")
