@@ -23,12 +23,12 @@
  */
 package com.github.piotrkot.json;
 
+import jakarta.json.Json;
+import jakarta.json.JsonValue;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Map;
-import javax.json.Json;
-import javax.json.JsonValue;
 
 /**
  * JSON Value found.
@@ -54,11 +54,11 @@ public final class JsonValueFound {
      * @return JSON value.
      * @checkstyle CyclomaticComplexity (2 lines)
      */
-    @SuppressWarnings("PMD.CyclomaticComplexity")
+    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.CognitiveComplexity"})
     public JsonValue asJsonValue() {
         final JsonValue value;
         if (this.obj instanceof String) {
-            value = Json.createValue((String) obj);
+            value = Json.createValue((String) this.obj);
         } else if (this.obj instanceof Integer) {
             value = Json.createValue((Integer) this.obj);
         } else if (this.obj instanceof Double) {

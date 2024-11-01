@@ -23,7 +23,7 @@
  */
 package com.github.piotrkot.json;
 
-import javax.json.JsonValue;
+import jakarta.json.JsonValue;
 
 /**
  * JSON Value.

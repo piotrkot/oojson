@@ -23,12 +23,12 @@
  */
 package com.github.piotrkot.json;
 
+import jakarta.json.Json;
+import jakarta.json.JsonValue;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Map;
-import javax.json.Json;
-import javax.json.JsonValue;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -47,6 +47,7 @@ final class ObjectFoundTest {
     @Test
     void shouldFindBoolFalse() throws Exception {
         MatcherAssert.assertThat(
+            "False object is false",
             new ObjectFound(JsonValue.FALSE).asObject(),
             Matchers.is(false)
         );
@@ -59,6 +60,7 @@ final class ObjectFoundTest {
     @Test
     void shouldFindBoolTrue() throws Exception {
         MatcherAssert.assertThat(
+            "True object is true",
             new ObjectFound(JsonValue.TRUE).asObject(),
             Matchers.is(true)
         );
@@ -71,6 +73,7 @@ final class ObjectFoundTest {
     @Test
     void shouldFindString() throws Exception {
         MatcherAssert.assertThat(
+            "String object is a string",
             new ObjectFound(Json.createValue("")).asObject(),
             Matchers.is("")
         );
@@ -83,6 +86,7 @@ final class ObjectFoundTest {
     @Test
     void shouldFindNull() throws Exception {
         MatcherAssert.assertThat(
+            "Null object is null",
             new ObjectFound(JsonValue.NULL).asObject(),
             Matchers.nullValue()
         );
@@ -95,6 +99,7 @@ final class ObjectFoundTest {
     @Test
     void shouldFindArray() throws Exception {
         MatcherAssert.assertThat(
+            "Json Array is of collection type",
             new ObjectFound(JsonValue.EMPTY_JSON_ARRAY).asObject(),
             Matchers.instanceOf(Collection.class)
         );
@@ -107,6 +112,7 @@ final class ObjectFoundTest {
     @Test
     void shouldFindObject() throws Exception {
         MatcherAssert.assertThat(
+            "Json object is of map type",
             new ObjectFound(JsonValue.EMPTY_JSON_OBJECT).asObject(),
             Matchers.instanceOf(Map.class)
         );
@@ -119,6 +125,7 @@ final class ObjectFoundTest {
     @Test
     void shouldFindInt() throws Exception {
         MatcherAssert.assertThat(
+            "Json integer is an integer",
             new ObjectFound(Json.createValue(0)).asObject(),
             Matchers.instanceOf(Integer.class)
         );
@@ -131,6 +138,7 @@ final class ObjectFoundTest {
     @Test
     void shouldFindLong() throws Exception {
         MatcherAssert.assertThat(
+            "Json long is a long",
             new ObjectFound(Json.createValue(Long.MAX_VALUE)).asObject(),
             Matchers.instanceOf(Long.class)
         );
@@ -143,7 +151,8 @@ final class ObjectFoundTest {
     @Test
     void shouldFindDouble() throws Exception {
         MatcherAssert.assertThat(
-            // @checkstyle MagicNumber (1 line)
+            // @checkstyle MagicNumber (2 line)
+            "Json double is a double",
             new ObjectFound(Json.createValue(0.3)).asObject(),
             Matchers.instanceOf(Double.class)
         );
@@ -156,6 +165,7 @@ final class ObjectFoundTest {
     @Test
     void shouldFindBigInteger() throws Exception {
         MatcherAssert.assertThat(
+            "Json big integer is a big integer",
             new ObjectFound(
                 Json.createValue(new BigInteger("9223372036854775808"))
             ).asObject(),
@@ -170,6 +180,7 @@ final class ObjectFoundTest {
     @Test
     void shouldFindBigDecimal() throws Exception {
         MatcherAssert.assertThat(
+            "Json big decimal is a big decimal",
             new ObjectFound(
                 Json.createValue(new BigDecimal("9223372036854775808.1111"))
             ).asObject(),

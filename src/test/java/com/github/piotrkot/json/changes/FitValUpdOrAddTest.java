@@ -46,6 +46,7 @@ final class FitValUpdOrAddTest {
             new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
+            "Should add value for missing attribute",
             new FitValUpdOrAdd("test", "hello").make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\",\"test\":\"hello\"}")
@@ -63,6 +64,7 @@ final class FitValUpdOrAddTest {
             new Attr<>("boo", "bar")
         );
         MatcherAssert.assertThat(
+            "Should update value",
             new FitValUpdOrAdd("type", "zoo").make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"boo\":\"bar\",\"type\":\"zoo\"}")

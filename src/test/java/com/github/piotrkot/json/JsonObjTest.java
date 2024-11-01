@@ -23,12 +23,12 @@
  */
 package com.github.piotrkot.json;
 
+import jakarta.json.Json;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Map;
-import javax.json.Json;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -50,6 +50,7 @@ final class JsonObjTest {
     @Test
     void shouldCreateObj() throws Exception {
         MatcherAssert.assertThat(
+            "Json object is valid json",
             new JsonObj(
                 new Attr<>("b", true),
                 new Attr<>("s", "a"),
@@ -70,6 +71,7 @@ final class JsonObjTest {
         final String obj =
             "{\"b\":false,\"s\":\"a\",\"n\":0,\"a\":[],\"o\":{}}";
         MatcherAssert.assertThat(
+            "Json object from string is valid json",
             new JsonObj(new StringReader(obj)).jsonValue().toString(),
             Matchers.is(obj)
         );
@@ -84,6 +86,7 @@ final class JsonObjTest {
         final String obj =
             "{\"f\":false,\"y\":\"\",\"z\":[\"Z\"],\"x\":{\"X\":0}}";
         MatcherAssert.assertThat(
+            "Json object from stream is valid json",
             new JsonObj(
                 new ByteArrayInputStream(
                     obj.getBytes(StandardCharsets.UTF_8)
@@ -102,6 +105,7 @@ final class JsonObjTest {
         final String obj =
             "{\"f\":true,\"y\":\"\",\"z\":[\"Z\"],\"x\":{\"X\":0}}";
         MatcherAssert.assertThat(
+            "Json object from bytes is valid json",
             new JsonObj(
                 obj.getBytes(StandardCharsets.UTF_8)
             ).jsonValue().toString(),
@@ -116,6 +120,7 @@ final class JsonObjTest {
     @Test
     void shouldCreateObjStringApi() throws Exception {
         MatcherAssert.assertThat(
+            "Json object from JSON API is valid json",
             new JsonObj(
                 Json.createObjectBuilder().add("name", "Mark").build(),
                 new Attr<>("id", 1)
@@ -131,6 +136,7 @@ final class JsonObjTest {
     @Test
     void shouldCreateObjFromObjAndAttr() throws Exception {
         MatcherAssert.assertThat(
+            "Json object from Json object is valid json",
             new JsonObj(
                 new JsonObj(
                     new Attr<>("first", "Tom")
@@ -148,6 +154,7 @@ final class JsonObjTest {
     @Test
     void shouldReturnValue() throws Exception {
         MatcherAssert.assertThat(
+            "Value of Json object is a map",
             new JsonObj().value(),
             Matchers.instanceOf(Map.class)
         );
@@ -161,6 +168,7 @@ final class JsonObjTest {
     void shouldGetObjAttr() throws Exception {
         final String empty = "empty";
         MatcherAssert.assertThat(
+            "Json object can fetch its attribute",
             new JsonObj(
                 new Attr<>(empty, "")
             ).<String>get(empty),
@@ -179,6 +187,7 @@ final class JsonObjTest {
             () -> new JsonObj().get("missing")
         );
         MatcherAssert.assertThat(
+            "Json object can't fetch wrong attribute",
             thrown.getMessage(),
             Matchers.is("Attribute name \"missing\" not found")
         );
@@ -191,6 +200,7 @@ final class JsonObjTest {
     @Test
     void shouldGetSimpleObjDefAttr() throws Exception {
         MatcherAssert.assertThat(
+            "Json object can fetch default attribute",
             new JsonObj().get("miss", "X"),
             Matchers.is("X")
         );
@@ -203,6 +213,7 @@ final class JsonObjTest {
     @Test
     void shouldGetSimpleObjNotDefAttr() throws Exception {
         MatcherAssert.assertThat(
+            "Json object can fetch its real (not default) attribute if exists",
             new JsonObj(new Attr<>("M", "Y")).get("M", "X"),
             Matchers.is("Y")
         );
@@ -215,6 +226,7 @@ final class JsonObjTest {
     @Test
     void shouldGetComplexObjDefAttr() throws Exception {
         MatcherAssert.assertThat(
+            "Json object can fetch default complex attribute",
             new JsonObj().get("other", new JsonArr<>()).value(),
             Matchers.instanceOf(Collection.class)
         );
@@ -227,6 +239,7 @@ final class JsonObjTest {
     @Test
     void shouldSameObjectsBeEqual() throws Exception {
         MatcherAssert.assertThat(
+            "Json object is equal to another differently created",
             new JsonObj(new Attr<>("owner", "John")).equals(
                 new JsonObj(new StringReader("{\"owner\":\"John\"}"))
             ),
@@ -241,6 +254,7 @@ final class JsonObjTest {
     @Test
     void shouldSameObjectsHaveSameHash() throws Exception {
         MatcherAssert.assertThat(
+            "Json object which are same should have same hash",
             new JsonObj(new Attr<>("valid", true)).hashCode(),
             Matchers.is(
                 new JsonObj(new StringReader("{\"valid\":true}")).hashCode()
@@ -255,6 +269,7 @@ final class JsonObjTest {
     @Test
     void shouldSameAttrObjectsHaveSameHash() throws Exception {
         MatcherAssert.assertThat(
+            "Json objects with unordered attributes should have same hash",
             new JsonObj(
                 new Attr<>("a1", "v1"),
                 new Attr<>("a2", "v2")

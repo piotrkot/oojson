@@ -23,13 +23,13 @@
  */
 package com.github.piotrkot.json;
 
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import javax.json.Json;
-import javax.json.JsonArray;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListEnvelope;
 import org.cactoos.list.ListOf;

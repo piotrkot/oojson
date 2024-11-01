@@ -48,6 +48,7 @@ final class FitAttrAddTest {
             new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
+            "Should not add attribute when present",
             new FitAttrAdd(new Attr<>("val", BigInteger.ONE)).make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
@@ -64,6 +65,7 @@ final class FitAttrAddTest {
             new Attr<>("type", "bar")
         );
         MatcherAssert.assertThat(
+            "Should add attribute",
             new FitAttrAdd(new Attr<>("val", BigDecimal.ZERO)).make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"type\":\"bar\",\"val\":0}")

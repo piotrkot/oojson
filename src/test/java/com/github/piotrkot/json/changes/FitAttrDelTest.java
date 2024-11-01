@@ -46,6 +46,7 @@ final class FitAttrDelTest {
             new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
+            "Should not delete attribute when missing",
             new FitAttrDel("test").make(obj).jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
         );
@@ -61,6 +62,7 @@ final class FitAttrDelTest {
             new Attr<>("type", "bar")
         );
         MatcherAssert.assertThat(
+            "Should delete attribute",
             new FitAttrDel("type").make(obj).jsonValue().toString(),
             Matchers.is("{}")
         );

@@ -23,12 +23,12 @@
  */
 package com.github.piotrkot.json;
 
+import jakarta.json.JsonArray;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
-import javax.json.JsonArray;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.Mapped;
 import org.hamcrest.MatcherAssert;
@@ -50,6 +50,7 @@ final class JsonArrTest {
     @Test
     void shouldCreateArr() throws Exception {
         MatcherAssert.assertThat(
+            "Json array is valid json",
             new JsonArr<>(
                 true,
                 "a",
@@ -68,6 +69,7 @@ final class JsonArrTest {
     @Test
     void shouldCreateBoolArr() throws Exception {
         MatcherAssert.assertThat(
+            "Json array with booleans is valid json",
             new JsonArr<>(
                 true, false, true
             ).jsonValue().toString(),
@@ -82,6 +84,7 @@ final class JsonArrTest {
     @Test
     void shouldCreateStrArr() throws Exception {
         MatcherAssert.assertThat(
+            "Json array with strings is valid json",
             new JsonArr<>(
                 "a", "ba", "acd"
             ).jsonValue().toString(),
@@ -96,6 +99,7 @@ final class JsonArrTest {
     @Test
     void shouldCreateNumArr() throws Exception {
         MatcherAssert.assertThat(
+            "Json array with numbers is valid json",
             new JsonArr<>(
                 // @checkstyle MagicNumberCheck (1 line)
                 1, 1.4, -1.3, 3L, BigDecimal.TEN
@@ -112,7 +116,8 @@ final class JsonArrTest {
     void shouldCreateArrString() throws Exception {
         final String array = "[false,\"x\",1,[],{}]";
         MatcherAssert.assertThat(
-            new JsonArr(new StringReader(array)).jsonValue().toString(),
+            "Json array from string is valid json",
+            new JsonArr<>(new StringReader(array)).jsonValue().toString(),
             Matchers.is(array)
         );
     }
@@ -125,7 +130,8 @@ final class JsonArrTest {
     void shouldCreateArrStream() throws Exception {
         final String array = "[false,\"y\",2,[\"Z\"],{\"x\":0}]";
         MatcherAssert.assertThat(
-            new JsonArr(
+            "Json array from stream is valid json",
+            new JsonArr<>(
                 new ByteArrayInputStream(
                     array.getBytes(StandardCharsets.UTF_8)
                 )
@@ -141,7 +147,8 @@ final class JsonArrTest {
     @Test
     void shouldCreateArrApiCopy() throws Exception {
         MatcherAssert.assertThat(
-            new JsonArr(JsonArray.EMPTY_JSON_ARRAY).jsonValue().toString(),
+            "Json array from JSON API is valid json",
+            new JsonArr<>(JsonArray.EMPTY_JSON_ARRAY).jsonValue().toString(),
             Matchers.is("[]")
         );
     }
@@ -153,6 +160,7 @@ final class JsonArrTest {
     @Test
     void shouldReturnValue() throws Exception {
         MatcherAssert.assertThat(
+            "Json array is an instance of collection",
             new JsonArr<>().value(),
             Matchers.instanceOf(Collection.class)
         );
@@ -167,6 +175,7 @@ final class JsonArrTest {
     @Test
     void shouldTransferArr() throws Exception {
         MatcherAssert.assertThat(
+            "Json array of booleans should transfer to strings",
             new JsonArr<>(
                 new Mapped<>(
                     elem -> Boolean.toString(elem),
@@ -191,9 +200,11 @@ final class JsonArrTest {
         final String array = "[1,2,3]";
         final JsonArr<Integer> json = new JsonArr<>(new StringReader(array));
         MatcherAssert.assertThat(
+            "Json array can iterate its elements once",
             json.jsonValue().toString(), Matchers.is(array)
         );
         MatcherAssert.assertThat(
+            "Json array can iterate its elements twice",
             json.jsonValue().toString(), Matchers.is(array)
         );
     }
@@ -205,6 +216,7 @@ final class JsonArrTest {
     @Test
     void shouldSameArraysBeEqual() throws Exception {
         MatcherAssert.assertThat(
+            "Json array are equal if created differently",
             new JsonArr<>(0, 1).equals(
                 new JsonArr<>(new StringReader("[0,1]"))
             ),
@@ -219,6 +231,7 @@ final class JsonArrTest {
     @Test
     void shouldSameArraysHaveSameHash() throws Exception {
         MatcherAssert.assertThat(
+            "Json arrays which are same have same hash",
             new JsonArr<>("valid", "test").hashCode(),
             Matchers.is(
                 new JsonArr<>(new StringReader("[\"valid\",\"test\"]")).hashCode()

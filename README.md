@@ -125,30 +125,27 @@ The result is object `{"moreInfo":true}`.
 
 Library supports [JSON specification](https://json.org/).
 
-Please, note the library is still in early development and it's API can
-frequently change.
-
 To get started, add dependency to your project:
 ```xml
 <dependency>
     <groupId>com.github.piotrkot</groupId>
     <artifactId>oojson</artifactId>
-    <version>1.8.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
 You may need to add [JSON-P](https://javaee.github.io/jsonp/) dependency:
 ```xml
 <dependency>
-    <groupId>javax.json</groupId>
-    <artifactId>javax.json-api</artifactId>
-    <version>1.1.4</version>
+    <groupId>jakarta.json</groupId>
+    <artifactId>jakarta.json-api</artifactId>
+    <version>2.1.3</version>
     <scope>provided</scope>
 </dependency>
 <dependency>
-    <groupId>org.glassfish</groupId>
-    <artifactId>javax.json</artifactId>
-    <version>1.1.4</version>
+    <groupId>org.eclipse.parsson</groupId>
+    <artifactId>parsson</artifactId>
+    <version>1.1.7</version>
     <scope>runtime</scope>
 </dependency>
 ```

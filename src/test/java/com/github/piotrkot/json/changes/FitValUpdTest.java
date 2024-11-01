@@ -46,6 +46,7 @@ final class FitValUpdTest {
             new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
+            "Should not update value for missing attribute",
             new FitValUpd("test", "hello").make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
@@ -62,6 +63,7 @@ final class FitValUpdTest {
             new Attr<>("type", "bar")
         );
         MatcherAssert.assertThat(
+            "Should update value",
             new FitValUpd("type", "zoo").make(obj)
                 .jsonValue().toString(),
             Matchers.is("{\"type\":\"zoo\"}")
@@ -78,6 +80,7 @@ final class FitValUpdTest {
             new Attr<>("num", 1)
         );
         MatcherAssert.assertThat(
+            "Should update value dynamically",
             new FitValUpd(
                 "num",
                 (obj.<Integer>get("num")) * 2

@@ -23,12 +23,12 @@
  */
 package com.github.piotrkot.json;
 
+import jakarta.json.JsonArray;
+import jakarta.json.JsonNumber;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonString;
+import jakarta.json.JsonValue;
 import java.math.BigInteger;
-import javax.json.JsonArray;
-import javax.json.JsonNumber;
-import javax.json.JsonObject;
-import javax.json.JsonString;
-import javax.json.JsonValue;
 
 /**
  * Object found.
@@ -63,7 +63,7 @@ public final class ObjectFound {
                 value = ((JsonString) this.json).getString();
                 break;
             case ARRAY:
-                value = new JsonArr((JsonArray) this.json).value();
+                value = new JsonArr<>((JsonArray) this.json).value();
                 break;
             case NUMBER:
                 value = this.asNumber();

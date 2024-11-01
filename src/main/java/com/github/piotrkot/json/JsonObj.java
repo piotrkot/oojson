@@ -23,6 +23,8 @@
  */
 package com.github.piotrkot.json;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Reader;
@@ -30,8 +32,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.json.Json;
-import javax.json.JsonObject;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.list.ListOf;

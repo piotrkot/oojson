@@ -41,6 +41,7 @@ final class AttrTest {
     @Test
     void shouldSameObjectsBeEqual() throws Exception {
         MatcherAssert.assertThat(
+            "Same attributes should be equal",
             new Attr<>("owner", true).equals(
                 new Attr<>("owner", true)
             ),
@@ -55,6 +56,7 @@ final class AttrTest {
     @Test
     void shouldSameObjectsHaveSameHash() throws Exception {
         MatcherAssert.assertThat(
+            "Same attributes should have same hash",
             new Attr<>("valid", "").hashCode(),
             Matchers.is(
                 new Attr<>("valid", "").hashCode()
@@ -69,6 +71,7 @@ final class AttrTest {
     @Test
     void shouldBeToString() throws Exception {
         MatcherAssert.assertThat(
+            "Attribute should have toString method",
             new Attr<>(
                 "object",
                 new JsonObj(

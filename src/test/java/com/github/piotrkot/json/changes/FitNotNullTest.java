@@ -51,6 +51,7 @@ final class FitNotNullTest {
             )
         );
         MatcherAssert.assertThat(
+            "Should not delete nested attribute",
             new FitNotNull().make(obj),
             Matchers.equalTo(obj)
         );
@@ -66,6 +67,7 @@ final class FitNotNullTest {
             new Attr<>("null", null)
         );
         MatcherAssert.assertThat(
+            "Should not delete null attribute",
             new FitNotNull().make(obj).jsonValue().toString(),
             Matchers.is("{}")
         );

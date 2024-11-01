@@ -46,6 +46,7 @@ final class FitAttrDelCondTest {
             new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
+            "Should not delete attribute when condition not met",
             new FitAttrDelCond<String>("val", "bar"::equals)
                 .make(obj).jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
@@ -62,6 +63,7 @@ final class FitAttrDelCondTest {
             new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
+            "Should not delete missing attribute",
             new FitAttrDelCond<String>("test", "bar"::equals)
                 .make(obj).jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
@@ -78,6 +80,7 @@ final class FitAttrDelCondTest {
             new Attr<>("type", "bar")
         );
         MatcherAssert.assertThat(
+            "Should delete attribute",
             new FitAttrDelCond<String>(
                 "type", val -> val.startsWith("ba")
             ).make(obj).jsonValue().toString(),

@@ -46,6 +46,7 @@ final class FitAttrReplTest {
             new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
+            "Should not replace missing attribute",
             new FitAttrRepl("bar", new Attr<>("la", 0))
                 .make(obj).jsonValue().toString(),
             Matchers.is("{\"val\":\"foo\"}")
@@ -63,6 +64,7 @@ final class FitAttrReplTest {
             new Attr<>("aa", true)
         );
         MatcherAssert.assertThat(
+            "Should replace attribute",
             new FitAttrRepl("type", new Attr<>("val", 0))
                 .make(obj).jsonValue().toString(),
             Matchers.is("{\"aa\":true,\"val\":0}")

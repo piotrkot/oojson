@@ -46,6 +46,7 @@ final class FitChainTest {
             new Attr<>("val", "foo")
         );
         MatcherAssert.assertThat(
+            "Should make chain changes",
             new FitChain<>(
                 new FitAttrAdd(new Attr<>("test", 1L)),
                 new FitValUpd("val", "bar")
